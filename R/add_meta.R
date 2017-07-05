@@ -19,7 +19,10 @@
 #' @seealso \code{\link{add_contributing}}, \code{\link{add_license}}, \code{\link{add_license_header}}
 #' @return NULL
 add_readme <- function(path = ".", package = FALSE, CoC = TRUE) {
+  if (CoC == TRUE) add_code_of_conduct()
+  
   if (package) fname <- "pkg-README.md" else fname <- "README.md"
+  
   add_file_from_template(path, fname, outfile = "README.md")
   invisible(TRUE)
 } 
