@@ -8,18 +8,20 @@
 envreportutils
 ==============
 
-[ggplot2](http://ggplot2.org/) themes and other functions commonly used by the [Environmental Reporting BC](http://www2.gov.bc.ca/gov/content?id=FF80E0B985F245CEA62808414D78C41B) team when developing environmental reporting indicators and products.
+[ggplot2](http://ggplot2.org/) themes and other functions commonly used by the [Environmental Reporting BC](http://www2.gov.bc.ca/gov/content?id=FF80E0B985F245CEA62808414D78C41B) team when developing environmental reporting indicators and related products.
 
 ### Features
 
 Currently there are six main functions:
 
--   `theme_soe()` - default ggplot2 theme for Environmental Reporting BC graphs
--   `theme_soe_facet()` - default ggplot2 theme for Environmental Reporting BC graphs using facetting
+-   `theme_soe()` - default `ggplot2` theme for Environmental Reporting BC graphs
+-   `theme_soe_facet()` - default `ggplot2` theme for Environmental Reporting BC graphs using facetting
 -   `multiplot()` - combine multiple `ggplot2` plots into one
 -   `bgc_colours` - get colour codes for B.C. Biogeoclimatic (BGC) Zones
 -   `get_data_license` - get the url, or a markdown or html-formatted link to one of several B.C. or Candadian licenses
--   `order_df` - order a df using summary of another column or specify the order manually
+-   `order_df` - order a data frame using summary of a specified column or specify the order manually
+
+The package also installs an [RStudio Addin](https://rstudio.github.io/rstudioaddins/) for adding a custom footer to READMEs for projects maintained by [Environmental Reporting BC](https://github.com/bcgov/EnvReportBC).
 
 ### Installation
 
