@@ -8,22 +8,18 @@
 envreportutils
 ==============
 
-A few functions that the Environmental Reporting BC team uses to be more efficient in the code we write. Most of the functions relate to plotting with the [ggplot2](http://ggplot2.org/) plotting package by Hadley Wickham.
+[ggplot2](http://ggplot2.org/) themes and other functions commonly used by the [Environmental Reporting BC](http://www2.gov.bc.ca/gov/content?id=FF80E0B985F245CEA62808414D78C41B) team when developing environmental reporting indicators and products.
 
 ### Features
 
-Currently there are five main functions:
+Currently there are six main functions:
 
-#### Plotting
-
+-   `theme_soe()` - default ggplot2 theme for Environmental Reporting BC graphs
+-   `theme_soe_facet()` - default ggplot2 theme for Environmental Reporting BC graphs using facetting
 -   `multiplot()` - combine multiple `ggplot2` plots into one
--   `theme_soe()` - our default theme for the graphs we make
--   `theme_soe_facet()` - default theme for plots using facetting
-
-#### Miscellaneous
-
--   `roxygen_template()` - Add boilerplate documentation to a function using [Roxygen2](https://github.com/klutometis/roxygen) syntax.
--   `analysis_skeleton()` - Set up the folder structure for a new analysis
+-   `bgc_colours` - get colour codes for B.C. Biogeoclimatic (BGC) Zones
+-   `get_data_license` - get the url, or a markdown or html-formatted link to one of several B.C. or Candadian licenses
+-   `order_df` - order a df using summary of another column or specify the order manually
 
 ### Installation
 
@@ -56,7 +52,7 @@ Please note that this project is released with a [Contributor Code of Conduct](C
 
 ### License
 
-    Copyright 2017 Province of British Columbia
+    Copyright 2015 Province of British Columbia
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

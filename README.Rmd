@@ -24,25 +24,20 @@ envreportutils::devex_badge("delivery")
 
 # envreportutils
 
-A few functions that the Environmental Reporting BC team uses to be more
-efficient in the code we write. Most of the functions relate to plotting with 
-the [ggplot2](http://ggplot2.org/) plotting package by Hadley Wickham.
+[ggplot2](http://ggplot2.org/) themes and other functions commonly used by the [Environmental Reporting BC](http://www2.gov.bc.ca/gov/content?id=FF80E0B985F245CEA62808414D78C41B) team when developing environmental reporting indicators and products.
+
 
 ### Features
 
-Currently there are five main functions:
+Currently there are six main functions:
 
-#### Plotting
-
+- `theme_soe()` - default ggplot2 theme for Environmental Reporting BC graphs
+- `theme_soe_facet()` - default ggplot2 theme for Environmental Reporting BC graphs using facetting
 - `multiplot()` - combine multiple `ggplot2` plots into one
-- `theme_soe()` - our default theme for the graphs we make
-- `theme_soe_facet()` - default theme for plots using facetting
+- `bgc_colours` - get colour codes for B.C. Biogeoclimatic (BGC) Zones
+- `get_data_license` - get the url, or a markdown or html-formatted link to one of several B.C. or Candadian licenses
+- `order_df` - order a df using summary of another column or specify the order manually
 
-#### Miscellaneous
-
-- `roxygen_template()` - Add boilerplate documentation to a function using
-  [Roxygen2](https://github.com/klutometis/roxygen) syntax.
-- `analysis_skeleton()` - Set up the folder structure for a new analysis
 
 ### Installation
 
@@ -60,6 +55,7 @@ library("devtools")
 install_github("bcgov/envreportutils")
 ```
 
+
 ### Project Status
 
 This package is under continual development.
@@ -68,12 +64,14 @@ This package is under continual development.
 
 To report bugs/issues/feature requests, please file an [issue](https://github.com/bcgov/envreportutils/issues/).
 
+
 ### How to Contribute
 
 If you would like to contribute to the package, please see our 
 [CONTRIBUTING](CONTRIBUTING.md) guidelines.
 
 Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+
 
 ### License
 
