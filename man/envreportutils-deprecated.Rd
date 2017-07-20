@@ -31,6 +31,25 @@ add_readme(...)
 
 add_rproj(...)
 }
+\arguments{
+\item{...}{any paramters passed are ignored}
+
+\item{...}{any paramters passed are ignored}
+
+\item{...}{any paramters passed are ignored}
+
+\item{...}{any paramters passed are ignored}
+
+\item{...}{any paramters passed are ignored}
+
+\item{...}{any paramters passed are ignored}
+
+\item{...}{any paramters passed are ignored}
+
+\item{...}{any paramters passed are ignored}
+
+\item{...}{any paramters passed are ignored}
+}
 \description{
 These functions are no longer available in this package.
 }
