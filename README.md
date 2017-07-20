@@ -8,7 +8,7 @@
 envreportutils
 ==============
 
-[ggplot2](http://ggplot2.org/) themes and other functions commonly used by the [Environmental Reporting BC](http://www2.gov.bc.ca/gov/content?id=FF80E0B985F245CEA62808414D78C41B) team when developing environmental reporting indicators and related products.
+An [R](https://www.r-project.org/) package with [ggplot2](http://ggplot2.org/) themes and other functions commonly used by the [Environmental Reporting BC](http://www2.gov.bc.ca/gov/content?id=FF80E0B985F245CEA62808414D78C41B) team when developing environmental reporting indicators and related products.
 
 ### Features
 
