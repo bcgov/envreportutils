@@ -33,46 +33,72 @@
 #' @name envreportutils-deprecated
 NULL
 
+#' @param ... any paramters passed are ignored
+#'
 #' @rdname envreportutils-deprecated
 roxygen_template <-  function(...) {
   .Defunct("the RStudio shortcut Ctrl+Alt+Shift+R")
 }
 
+
+#' @param ... any paramters passed are ignored
+#'
 #' @rdname envreportutils-deprecated
 devex_badge <-  function(...) {
   .Defunct("bcgovr::devex_badge")
 }
 
+
+#' @param ... any paramters passed are ignored
+#'
 #' @rdname envreportutils-deprecated
 analysis_skeleton <-  function(...) {
   .Defunct("bcgovr::analysis_skeleton")
 }
 
+
+#' @param ... any paramters passed are ignored
+#'
 #' @rdname envreportutils-deprecated
 add_code_of_conduct <-  function(...) {
   .Defunct("bcgovr::add_code_of_conduct")
 }
 
+
+#' @param ... any paramters passed are ignored
+#'
 #' @rdname envreportutils-deprecated
 add_contributing <-  function(...) {
   .Defunct("bcgovr::add_contributing")
 }
 
+
+#' @param ... any paramters passed are ignored
+#'
 #' @rdname envreportutils-deprecated
 add_license <-  function(...) {
   .Defunct("bcgovr::add_license")
 }
 
+
+#' @param ... any paramters passed are ignored
+#'
 #' @rdname envreportutils-deprecated
 add_license_header <-  function(...) {
   .Defunct("bcgovr::add_license_header")
 }
 
+
+#' @param ... any paramters passed are ignored
+#'
 #' @rdname envreportutils-deprecated
 add_readme <-  function(...) {
   .Defunct("bcgovr::add_readme")
 }
 
+
+#' @param ... any paramters passed are ignored
+#'
 #' @rdname envreportutils-deprecated
 add_rproj <-  function(...) {
   .Defunct("bcgovr::add_rproj")
