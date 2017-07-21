@@ -1,3 +1,7 @@
+# envreportutils 0.5
+
+* Numerous functions defunct, most of them moved to [bcgovr](https://github.com/bcgov/bcgovr).
+
 # envreportutils 0.4.1
 
 * Updated `devex_badge()` to refer to new location of BCDevExchange project state badges. 
