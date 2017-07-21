@@ -15,7 +15,6 @@ Depends:
 Imports:
     ggplot2 (>= 2.2.0),
     ggthemes (>= 3.2.0),
-    git2r (>= 0.15.0),
     dplyr (>= 0.5.0),
     lazyeval (>= 0.2.0),
     rstudioapi (>= 0.6.0)
