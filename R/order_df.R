@@ -35,8 +35,8 @@
 #'                  Col3 = 1:9, 
 #'                  stringsAsFactors = FALSE)
 #' 
-#' order_df(df, target_col = "Col1", value_col = "Col2", fun = mean)
-#' order_df(df, target_col = "Col1", factor_order = c("b", "a", "c"))
+#' suppressWarnings(order_df(df, target_col = "Col1", value_col = "Col2", fun = mean))
+#' suppressWarnings(order_df(df, target_col = "Col1", factor_order = c("b", "a", "c")))
 order_df <- function(df, target_col, value_col = NULL, fun = NULL, ..., desc = FALSE, factor_order = NULL) {
   
   .Deprecated("forcats")
