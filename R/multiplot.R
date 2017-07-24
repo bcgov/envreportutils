@@ -10,7 +10,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and limitations under the License.
 
-#'Plot multiple plots in a single pane
+
+#'Plot multiple plots in a single pane. This function stills work but will be removed (defunct)
+#' in the next version of the package. The `cowplot` package has the same functionality.
 #'
 #'ggplot objects can be passed in ..., or to plotlist (as a list of ggplot 
 #'objects)
@@ -62,6 +64,8 @@
 #'}
 multiplot <- function(..., plotlist=NULL, cols=1, layout=NULL, widths=NULL, heights=NULL, 
                       title=NULL, titlefont = "", titleface = 1, titlesize = 16) {
+  
+  .Deprecated("cowplot")
   
   # Make a list from the ... arguments and plotlist
   plots <- c(list(...), plotlist)
