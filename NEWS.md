@@ -1,3 +1,7 @@
+# envreportutils 0.5.1
+
+* Two functions deprecated, functionality available in other CRAN packages.
+
 # envreportutils 0.5
 
 * Numerous functions defunct, most of them moved to [bcgovr](https://github.com/bcgov/bcgovr).
