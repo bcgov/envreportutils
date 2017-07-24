@@ -10,8 +10,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and limitations under the License.
 
-#' Create an ordered factor in a data.frame and sort the data.frame by that column
-#' 
+
+#' Create an ordered factor in a data.frame and sort the data.frame by that column. This
+#' function stills work but will be removed (defunct) in the next version of the package.
+#' You can use forcats::fct_reorder for the same functionality.
+#'
 #' Can use the summary of another column (\code{target_col}), or specify the order manually (\code{factor_order})
 #'
 #' @param df the data frame to sort
@@ -32,9 +35,12 @@
 #'                  Col3 = 1:9, 
 #'                  stringsAsFactors = FALSE)
 #' 
-#' order_df(df, target_col = "Col1", value_col = "Col2", fun = mean)
-#' order_df(df, target_col = "Col1", factor_order = c("b", "a", "c"))
+#' suppressWarnings(order_df(df, target_col = "Col1", value_col = "Col2", fun = mean))
+#' suppressWarnings(order_df(df, target_col = "Col1", factor_order = c("b", "a", "c")))
 order_df <- function(df, target_col, value_col = NULL, fun = NULL, ..., desc = FALSE, factor_order = NULL) {
+  
+  .Deprecated("forcats")
+  
   if (!target_col %in% names(df)) stop("specified target_col is not a column in df")
   if (!is.null(value_col)) {
     if (!value_col %in% names(df)) stop("specified value_col is not a column in df")
