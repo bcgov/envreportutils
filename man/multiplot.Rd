@@ -2,7 +2,8 @@
 % Please edit documentation in R/multiplot.R
 \name{multiplot}
 \alias{multiplot}
-\title{Plot multiple plots in a single pane}
+\title{Plot multiple plots in a single pane. This function stills work but will be removed (defunct)
+in the next version of the package. The `cowplot` package has the same functionality.}
 \usage{
 multiplot(..., plotlist = NULL, cols = 1, layout = NULL, widths = NULL,
   heights = NULL, title = NULL, titlefont = "", titleface = 1,
