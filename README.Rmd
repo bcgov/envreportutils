@@ -36,7 +36,7 @@ Currently there are six main functions:
 - `multiplot()` - combine multiple `ggplot2` plots into one (this function is deprecated, see the [`cowplot`](https://cran.r-project.org/web/packages/cowplot/index.html) package for the same functionality)
 - `bgc_colours()` - get colour codes for B.C. Biogeoclimatic (BGC) Zones
 - `get_data_license()` - get the url, or a markdown or html-formatted link to one of several B.C. or Canadian licenses
-- `order_df()` - order a data frame using summary of a specified column or specify the order manually (this function is deprecated, see [`forcats::reorder`](https://cran.r-project.org/web/packages/forcats/index.html) for the same functionality)
+- `order_df()` - order a data frame using summary of a specified column or specify the order manually (this function is deprecated, see [`forcats::fct_reorder`](https://cran.r-project.org/web/packages/forcats/index.html) for the same functionality)
 
 The package also installs an [RStudio Addin](https://rstudio.github.io/rstudioaddins/) for adding a custom footer to READMEs for projects maintained by [Environmental Reporting BC](https://github.com/bcgov/EnvReportBC).
 
