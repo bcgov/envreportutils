@@ -25,7 +25,7 @@ theme_soe <- function(base_size=12, base_family="Verdana") {
   thm
 }  
 
-#' Soe plot theme for facetted graphs
+#' Default theme for EnvReportBC facetted graphs and plots
 #' 
 #' @import ggplot2 ggthemes
 #' @param  base_size base font size (default = 12)

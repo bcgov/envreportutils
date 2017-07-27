@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme_soe.r
 \name{theme_soe_facet}
 \alias{theme_soe_facet}
-\title{Soe plot theme for facetted graphs}
+\title{Default theme for EnvReportBC facetted graphs and plots}
 \usage{
 theme_soe_facet(base_size = 12, base_family = "Verdana")
 }
@@ -15,7 +15,7 @@ theme_soe_facet(base_size = 12, base_family = "Verdana")
 a ggplot2 theme
 }
 \description{
-Soe plot theme for facetted graphs
+Default theme for EnvReportBC facetted graphs and plots
 }
 \keyword{plotting}
 \keyword{theme}
