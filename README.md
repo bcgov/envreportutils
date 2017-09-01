@@ -1,16 +1,17 @@
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<a rel="Delivery" href="https://github.com/BCDevExchange/docs/blob/master/discussion/projectstates.md"><img alt="In production, but maybe in Alpha or Beta. Intended to persist and be supported." style="border-width:0" src="https://assets.bcdevexchange.org/images/badges/delivery.svg" title="In production, but maybe in Alpha or Beta. Intended to persist and be supported." /></a>
-
-[![Travis-CI Build Status](https://travis-ci.org/bcgov/envreportutils.svg?branch=master)](https://travis-ci.org/bcgov/envreportutils)
-
-------------------------------------------------------------------------
-
 envreportutils
 ==============
 
+<a rel="Delivery" href="https://github.com/BCDevExchange/docs/blob/master/discussion/projectstates.md"><img alt="In production, but maybe in Alpha or Beta. Intended to persist and be supported." style="border-width:0" src="https://assets.bcdevexchange.org/images/badges/delivery.svg" title="In production, but maybe in Alpha or Beta. Intended to persist and be supported." /></a>[![Travis-CI Build Status](https://travis-ci.org/bcgov/envreportutils.svg?branch=master)](https://travis-ci.org/bcgov/envreportutils)
+
+Overview
+--------
+
 An [R](https://www.r-project.org/) package with [ggplot2](http://ggplot2.org/) themes and other functions commonly used by the [Environmental Reporting BC](http://www2.gov.bc.ca/gov/content?id=FF80E0B985F245CEA62808414D78C41B) team when developing environmental reporting indicators and related products.
 
-### Features
+Features
+--------
 
 Currently there are six main functions:
 
@@ -23,7 +24,8 @@ Currently there are six main functions:
 
 The package also installs an [RStudio Addin](https://rstudio.github.io/rstudioaddins/) for adding a custom footer to READMEs for projects maintained by [Environmental Reporting BC](https://github.com/bcgov/EnvReportBC).
 
-### Installation
+Installation
+------------
 
 You can install the package directly from this repository. To do so, you will need the [devtools](https://github.com/hadley/devtools/) package:
 
@@ -38,21 +40,25 @@ library("devtools")
 install_github("bcgov/envreportutils")
 ```
 
-### Project Status
+Project Status
+--------------
 
 This package is under continual development.
 
-### Getting Help or Reporting an Issue
+Getting Help or Reporting an Issue
+----------------------------------
 
 To report bugs/issues/feature requests, please file an [issue](https://github.com/bcgov/envreportutils/issues/).
 
-### How to Contribute
+How to Contribute
+-----------------
 
 If you would like to contribute to the package, please see our [CONTRIBUTING](CONTRIBUTING.md) guidelines.
 
 Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
-### License
+License
+-------
 
     Copyright 2015 Province of British Columbia
 
