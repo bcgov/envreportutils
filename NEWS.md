@@ -1,3 +1,8 @@
+# envreportutils 0.6.0
+
+* Added function `png_retina()` - a drop in replacement for `png()` to produce 
+retina-quality graphics.
+
 # envreportutils 0.5.1
 
 * Two functions deprecated, functionality available in other CRAN packages.
