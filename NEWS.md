@@ -1,4 +1,4 @@
-# envreportutils 0.6.0
+# envreportutils 0.6.1
 
 * Added function `png_retina()` - a drop in replacement for `png()` to produce 
 retina-quality graphics.
