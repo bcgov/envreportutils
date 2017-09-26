@@ -30,6 +30,10 @@ png_retina <- function(filename = "Rplot%03d.png", width = 480, height = 480,
   height <- height * 2
   width <- width * 2
   res <- ifelse(is.na(res), 144, res * 2)
+ 
+  if (missing(type)) 
+    type <- getOption("bitmapType")
+  type <- match.arg(type)
   
   grDevices::png(filename = filename, width = width, height = height, 
                  units = units, pointsize = pointsize, bg = bg, res = res, ..., 
