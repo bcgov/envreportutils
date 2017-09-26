@@ -27,17 +27,12 @@ png_retina <- function(filename = "Rplot%03d.png", width = 480, height = 480,
                        units = "px", pointsize = 12, bg = "white",  res = NA, 
                        ..., type = c("cairo", "cairo-png", "Xlib", "quartz"), 
                        antialias) {
-  height <- height * 2
-  width <- width * 2
-  res <- ifelse(is.na(res), 144, res * 2)
- 
-  if (missing(type)) 
-    type <- getOption("bitmapType")
-  type <- match.arg(type)
   
   argslist <- as.list(match.call(expand.dots = TRUE)[-1])
-  argslist <- c(argslist, height = height, width = width, res = res, type = type, 
-                units = units, pointsize = pointsize, bg = bg)
+  
+  argslist$height <- height * 2
+  argslist$width <- width * 2
+  argslist$res <- ifelse(is.na(res), 144, res * 2)
   
   do.call(grDevices::png, argslist)
 }
