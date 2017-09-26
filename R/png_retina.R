@@ -35,7 +35,9 @@ png_retina <- function(filename = "Rplot%03d.png", width = 480, height = 480,
     type <- getOption("bitmapType")
   type <- match.arg(type)
   
-  grDevices::png(filename = filename, width = width, height = height, 
-                 units = units, pointsize = pointsize, bg = bg, res = res, ..., 
-                 type = type, antialias = antialias)
+  argslist <- as.list(match.call(expand.dots = TRUE)[-1])
+  argslist <- c(argslist, height = height, width = width, res = res, type = type, 
+                units = units, pointsize = pointsize, bg = bg)
+  
+  do.call(grDevices::png, argslist)
 }
