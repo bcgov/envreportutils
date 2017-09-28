@@ -1,3 +1,8 @@
+# envreportutils 0.6.0.99999
+
+# Added function `svg_px()` for exporting charts as svg, specifying size in pixels.
+# Added `soft()` function for sending files via ENV SOFT service.
+
 # envreportutils 0.6.1
 
 * Added function `png_retina()` - a drop in replacement for `png()` to produce 
