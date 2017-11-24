@@ -69,7 +69,7 @@ attributes in the html at the original resolution.
 \examples{
 
 # You want to display at 500 * 500 in the web:
-png_retina("myplot.png", width = 500, height = 500)
+png_retina("myplot.svg", width = 500, height = 500)
 plot(x = 1:500, y = rnorm(500))
 dev.off()
 
