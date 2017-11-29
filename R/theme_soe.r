@@ -12,7 +12,7 @@
 
 #' Default theme for EnvReportBC graphs and plots
 #' 
-#' @import ggplot2 ggthemes extrafont
+#' @import ggplot2 extrafont
 #' 
 #' @param  base_size base font size (default = 12)
 #' @param  base_family base font family (default = Verdana)
@@ -27,7 +27,7 @@ theme_soe <- function(base_size=12, base_family="Verdana") {
 
 #' Default theme for EnvReportBC facetted graphs and plots
 #' 
-#' @import ggplot2 ggthemes
+#' @import ggplot2
 #' @param  base_size base font size (default = 12)
 #' @param  base_family base font family (default = Verdana)
 #' @export
@@ -45,9 +45,7 @@ theme_soe_facet <- function(base_size = 12, base_family = "Verdana") {
 }
 
 theme_soe_foundation <- function(base_size, base_family) {
-  thm <- ggthemes::theme_foundation(base_size = base_size, 
-                                    base_family = base_family) +
-    theme(
+    theme_grey() + theme(
       text = element_text(colour = "black"),
       line = element_line(colour = "black", size = 0.5,
                           linetype = 1, lineend = "butt"),
@@ -69,9 +67,8 @@ theme_soe_foundation <- function(base_size, base_family) {
       axis.title.x = element_text(vjust = 0),
       panel.spacing = unit(0.25, "lines"),
       plot.background = element_blank(),
-      legend.key = element_blank(), 
+      legend.key = element_blank(),
       complete = TRUE)
   
-  thm
 }
 
