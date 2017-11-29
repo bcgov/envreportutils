@@ -1,7 +1,7 @@
 Package: envreportutils
 Type: Package
 Title: Utilities for common operations, mainly plotting
-Version: 0.6.0.99999
+Version: 0.6.2
 Date: 2017-09-21
 Authors@R: c(person("Andy", "Teucher", role = c("aut", "cre"), email =
     "andy.teucher@gov.bc.ca"), 
@@ -14,7 +14,6 @@ Depends:
     extrafont (>= 0.17)
 Imports:
     ggplot2 (>= 2.2.0),
-    ggthemes (>= 3.2.0),
     dplyr (>= 0.5.0),
     lazyeval (>= 0.2.0),
     rstudioapi (>= 0.6.0),
