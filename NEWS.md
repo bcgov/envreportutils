@@ -1,7 +1,11 @@
+# envreportutils 0.6.2
+
+* Dropped `ggthemes` dependency for `theme_soe()` and `theme_soe_facet` (#5).
+
 # envreportutils 0.6.0.99999
 
-# Added function `svg_px()` for exporting charts as svg, specifying size in pixels.
-# Added `soft()` function for sending files via ENV SOFT service.
+* Added function `svg_px()` for exporting charts as svg, specifying size in pixels.
+* Added `soft()` function for sending files via ENV SOFT service.
 
 # envreportutils 0.6.1
 
