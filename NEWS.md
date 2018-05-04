@@ -1,3 +1,7 @@
+# envreportutils 0.6.3
+
+* Added new function report_percent() to format percentages in a standard way.
+
 # envreportutils 0.6.2
 
 * Dropped `ggthemes` dependency for `theme_soe()` and `theme_soe_facet` (#5).
