@@ -1,6 +1,6 @@
 # envreportutils 0.6.3
 
-* Added new function report_percent() to format percentages in a standard way.
+* Added new function `report_percent()` to format percentages in a standard way.
 
 # envreportutils 0.6.2
 
