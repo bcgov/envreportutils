@@ -20,14 +20,15 @@
 #' @param x numerice vector of percentages
 #' @param round_90_to_one Should values above 90% be reported to a single 
 #' decimal place?
+#' @param as_char should the result be returned as a character vector? Default `TRUE`
 #'
 #' @return character vector of formatted percentages following these rounding rules
 #' @export
 #'
 #' @examples
-#' percent_round(c(2.5, 11.324, 95.898, 99.6))
-#' percent_round(c(2.5, 11.324, 95.898, 99.6), round_90_to_one = TRUE)
-percent_round <- function(x, round_90_to_one = FALSE) {
+#' report_percent(c(2.5, 11.324, 95.898, 99.6))
+#' report_percent(c(2.5, 11.324, 95.898, 99.6), round_90_to_one = TRUE)
+report_percent <- function(x, round_90_to_one = FALSE, as_char = TRUE) {
   
   if (length(x) > 1 && range(x) <= 0.1) {
     y <- round(x, 2)
@@ -35,5 +36,11 @@ percent_round <- function(x, round_90_to_one = FALSE) {
     y <- ifelse(x < 10 | x >= 99.5 | round_90_to_one & x > 90, round(x, 1),
                 round(x, 0))
   }
-  as.character(y)
+  
+  if (as_char) {
+    return(as.character(y))
+  }
+  
+  y
+  
 }
