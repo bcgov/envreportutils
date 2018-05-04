@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# envreportutils
+# envreportutils `r read.dcf("DESCRIPTION", "Version")`
 
 <div id="devex-badge"><a rel="Delivery" href="https://github.com/BCDevExchange/assets/blob/master/README.md"><img alt="In production, but maybe in Alpha or Beta. Intended to persist and be supported." style="border-width:0" src="https://assets.bcdevexchange.org/images/badges/delivery.svg" title="In production, but maybe in Alpha or Beta. Intended to persist and be supported." /></a>[![Travis-CI Build Status](https://travis-ci.org/bcgov/envreportutils.svg?branch=master)](https://travis-ci.org/bcgov/envreportutils)</div>
 
@@ -34,6 +34,7 @@ Currently there are six main functions:
 - `bgc_colours()` - get colour codes for B.C. Biogeoclimatic (BGC) Zones
 - `get_data_licence()` - get the url, or a markdown or html-formatted link to one of several B.C. or Canadian licences
 - `order_df()` - order a data frame using summary of a specified column or specify the order manually (this function is deprecated, see [`forcats::fct_reorder`](https://cran.r-project.org/web/packages/forcats/index.html) for the same functionality)
+- `report_percent()` - perform standardized rounding of percentage values for reporting.
 
 The package also installs an [RStudio Addin](https://rstudio.github.io/rstudioaddins/) for adding a custom footer to READMEs for projects maintained by [Environmental Reporting BC](https://github.com/bcgov/EnvReportBC).
 
