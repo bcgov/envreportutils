@@ -105,7 +105,8 @@ zip_it <- function(dir) {
   zipname <- paste0("soft_send_", Sys.Date(), ".zip")
   zipdir <- normalizePath(tempdir(), winslash = "/")
   zipfile <- file.path(zipdir, zipname, fsep = "/")
-  zip(zipfile = zipfile, files = dir, flags = paste0(formals(zip)$flags, " -q"))
+  utils::zip(zipfile = zipfile, files = dir, 
+             flags = paste0(formals(utils::zip)$flags, " -q"))
   zipfile
 }
 
