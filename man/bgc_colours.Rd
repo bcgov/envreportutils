@@ -8,7 +8,7 @@ bgc_colours(which = NULL)
 }
 \arguments{
 \item{which}{Optionally specify the codes for the BGC zones you want. 
-If \code{NULL} (the default), will return colours for all zones}
+If \code{NULL} (the default), will return colours for all zones.}
 }
 \value{
 A named character vector of hexadecimal colour codes, where the names are BGC Zone codes

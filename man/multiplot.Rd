@@ -3,33 +3,33 @@
 \name{multiplot}
 \alias{multiplot}
 \title{Plot multiple plots in a single pane. This function stills work but will be removed (defunct)
-in the next version of the package. The `cowplot` package has the same functionality.}
+in the next version of the package. The `cowplot` and `patchwork` packages have the same functionality.}
 \usage{
 multiplot(..., plotlist = NULL, cols = 1, layout = NULL, widths = NULL,
   heights = NULL, title = NULL, titlefont = "", titleface = 1,
   titlesize = 16)
 }
 \arguments{
-\item{...}{Two or more ggplot2 objects}
+\item{...}{Two or more ggplot2 objects.}
 
-\item{plotlist}{(optional) a list of ggplot2 objects}
+\item{plotlist}{A list of ggplot2 objects (optional).}
 
-\item{cols}{Number of columns in layout}
+\item{cols}{Number of columns in layout.}
 
 \item{layout}{A matrix specifying the layout. If present, 'cols' is ignored.}
 
-\item{widths}{a vector of relative column widths eg. c(3,2)}
+\item{widths}{A vector of relative column widths eg. c(3,2).}
 
-\item{heights}{a vector of relative column heights eg. c(3,2)}
+\item{heights}{A vector of relative column heights eg. c(3,2).}
 
-\item{title}{Optional title as a character string}
+\item{title}{Optional title as a character string.}
 
-\item{titlefont}{The font of the title}
+\item{titlefont}{The font of the title.}
 
 \item{titleface}{The font face (1 = normal, 2 = bold, 3 = italic, 4 = bold 
-italic)}
+italic).}
 
-\item{titlesize}{The size of the title font}
+\item{titlesize}{The size of the title font.}
 }
 \value{
 NULL (invisibly)

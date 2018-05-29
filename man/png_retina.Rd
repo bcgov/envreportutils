@@ -57,7 +57,7 @@ png_retina(filename = "Rplot\%03d.png", width = 480, height = 480,
     antialiasing is used unless \code{antialias = "none"}.}
 }
 \value{
-A plot device is opened: nothing is returned to the R interpreter.
+A plot device is opened: nothing is returned to the R interpreter
 }
 \description{
 This is a drop-in replacement for the \code{\link[grDevices]{png}} function 

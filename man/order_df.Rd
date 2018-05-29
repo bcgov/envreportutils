@@ -10,25 +10,25 @@ order_df(df, target_col, value_col = NULL, fun = NULL, ..., desc = FALSE,
   factor_order = NULL)
 }
 \arguments{
-\item{df}{the data frame to sort}
+\item{df}{The data frame to sort.}
 
-\item{target_col}{the column (character or factor) to convert to ordered factor}
+\item{target_col}{The column (character or factor) to convert to ordered factor.}
 
-\item{value_col}{the column to use to sort \code{target_col}}
+\item{value_col}{The column to use to sort \code{target_col}.}
 
-\item{fun}{function to use to summarize \code{value_col}}
+\item{fun}{Function to use to summarize \code{value_col}.}
 
-\item{...}{other options passed on to \code{fun} (eg. \code{na.rm = TRUE})}
+\item{...}{Other options passed on to \code{fun} (eg. \code{na.rm = TRUE}).}
 
-\item{desc}{should \code{target_col} be sorted according to \code{value_col} in a descending order (default \code{FALSE})}
+\item{desc}{Should \code{target_col} be sorted according to \code{value_col} in a descending order (default \code{FALSE}).}
 
-\item{factor_order}{a character vector of the unique values in \code{target_col} in the desired order.}
+\item{factor_order}{A character vector of the unique values in \code{target_col} in the desired order.}
 }
 \value{
 data frame
 }
 \description{
-Can use the summary of another column (\code{target_col}), or specify the order manually (\code{factor_order})
+Can use the summary of another column (\code{target_col}), or specify the order manually (\code{factor_order}).
 }
 \examples{
 set.seed(42)
