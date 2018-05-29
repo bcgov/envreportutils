@@ -3,7 +3,7 @@
 \name{get_data_licence}
 \alias{get_data_licence}
 \alias{get_data_license}
-\title{Returns a url, or a markdown or html-formatted link to one of several B.C. or Canadian licences}
+\title{Returns a url, or a markdown-formatted or html-formatted link to one of several B.C. or Canadian licences}
 \usage{
 get_data_licence(licence = c("ogl-bc", "bc-crown", "ogl-canada", "statscan"),
   what = "md_link")
@@ -28,7 +28,7 @@ get_data_licence(licence = c("ogl-bc", "bc-crown", "ogl-canada", "statscan"),
 Character containing the desired output
 }
 \description{
-Returns a url, or a markdown or html-formatted link to one of several B.C. or Canadian licences
+Returns a url, or a markdown-formatted or html-formatted link to one of several B.C. or Canadian licences
 }
 \examples{
 get_data_licence("ogl-bc", "url")
