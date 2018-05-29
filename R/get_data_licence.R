@@ -26,7 +26,7 @@
 #'   \item url The url of the licence
 #' }
 #'
-#' @return character containing the desired output
+#' @return Character containing the desired output
 #' @aliases get_data_license
 #' @export
 #'

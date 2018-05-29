@@ -17,20 +17,20 @@
 #' number of days the file will be available, and whether or not to restrict access to the file to
 #' within the governmnet network.
 #' 
-#' The SOFT web form and more information can be found [here](http://www.env.gov.bc.ca/csd/imb/soft/)
+#' The SOFT web form and more information can be found [here](http://www.env.gov.bc.ca/csd/imb/soft/).
 #'
-#' @param file path to the file or directory on your computer. If `file` is a directory
+#' @param file Path to the file or directory on your computer. If `file` is a directory
 #'     the files in the directory will be zipped before they are uploaded.
 #' @param email Optional email address to which to send the link to the file.
 #' @param email_subj Optional subject of the email.
 #' @param days The number of days the file should be available. Default 7.
-#' @param internal Should the link be only available with the B.C. government network? Default `TRUE`
+#' @param internal Should the link be only available with the B.C. Government network? Default `TRUE`
 #' @param progress Should a progress bar be displayed? Default \code{TRUE}.
 #'
 #' @importFrom httr POST stop_for_status content upload_file
 #' @importFrom xml2 xml_find_all xml_text
 #'
-#' @return a url of the link from which the file can be downloaded
+#' @return A url of the link from which the file can be downloaded
 #' @export
 #' @md
 soft <- function(file, email = NULL, email_subj = NULL, internal = TRUE, days = 7, 

@@ -12,7 +12,7 @@
 
 
 #'Plot multiple plots in a single pane. This function stills work but will be removed (defunct)
-#' in the next version of the package. The `cowplot` package has the same functionality.
+#' in the next version of the package. The `cowplot` and `patchwork` packages have the same functionality.
 #'
 #'ggplot objects can be passed in ..., or to plotlist (as a list of ggplot 
 #'objects)
@@ -20,17 +20,17 @@
 #'@import grid
 #'@export
 #'
-#'@param ... Two or more ggplot2 objects
-#'@param  plotlist (optional) a list of ggplot2 objects
-#'@param  cols Number of columns in layout
+#'@param ... Two or more ggplot2 objects.
+#'@param  plotlist A list of ggplot2 objects (optional).
+#'@param  cols Number of columns in layout.
 #'@param  layout A matrix specifying the layout. If present, 'cols' is ignored.
-#'@param  title Optional title as a character string
-#'@param  widths a vector of relative column widths eg. c(3,2)
-#'@param  heights a vector of relative column heights eg. c(3,2)
-#'@param  titlefont The font of the title
+#'@param  title Optional title as a character string.
+#'@param  widths A vector of relative column widths eg. c(3,2).
+#'@param  heights A vector of relative column heights eg. c(3,2).
+#'@param  titlefont The font of the title.
 #'@param  titleface The font face (1 = normal, 2 = bold, 3 = italic, 4 = bold 
-#'  italic)
-#'@param  titlesize The size of the title font
+#'  italic).
+#'@param  titlesize The size of the title font.
 #'  
 #'@details If plotting three plots and the layout is something like 
 #'  matrix(c(1,2,3,3), nrow=2, byrow=TRUE), then plot 1 will go in the upper 

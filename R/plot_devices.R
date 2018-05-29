@@ -8,7 +8,7 @@
 #'
 #' @inheritParams grDevices::png
 #'
-#' @return A plot device is opened: nothing is returned to the R interpreter.
+#' @return A plot device is opened: nothing is returned to the R interpreter
 #' @export
 #' 
 #' @seealso \code{\link[grDevices]{png}}
@@ -46,12 +46,12 @@ png_retina <- function(filename = "Rplot%03d.png", width = 480, height = 480,
 #'
 #' @inheritParams svglite::svglite
 #' 
-#' @param width the width of the plot in pixels. Default \code{800}.
-#' @param height the height of the plot in pixels. Default \code{800}. 
-#' @param res the resolution at which it is displayed. Default \code{72}. 
-#' You should rarely have to change this
+#' @param width The width of the plot in pixels. Default \code{800}.
+#' @param height The height of the plot in pixels. Default \code{800} .
+#' @param res The resolution at which it is displayed. Default \code{72}. 
+#' You should rarely have to change this.
 #'
-#' @return A plot device is opened: nothing is returned to the R interpreter.
+#' @return A plot device is opened: nothing is returned to the R interpreter
 #' @export
 #' 
 #' @seealso \code{\link[svglite]{svglite}}
