@@ -17,12 +17,12 @@
 #' Values over 90% may need one decimal place if their complement is informative. 
 #' Use two or more decimal places only if the range of values is less than 0.1%"
 #'
-#' @param x numerice vector of percentages
-#' @param round_90_to_one Should values above 90% be reported to a single 
+#' @param x Numeric vector of percentages
+#' @param round_90_to_one Should values above 90 percent be reported to a single 
 #' decimal place?
-#' @param as_char should the result be returned as a character vector? Default `TRUE`
+#' @param as_char Should the result be returned as a character vector? Default `TRUE`
 #'
-#' @return character vector of formatted percentages following these rounding rules
+#' @return Character vector of formatted percentages following these rounding rules
 #' @export
 #'
 #' @examples
