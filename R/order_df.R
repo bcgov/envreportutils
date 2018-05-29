@@ -15,15 +15,15 @@
 #' function stills work but will be removed (defunct) in the next version of the package.
 #' You can use forcats::fct_reorder for the same functionality.
 #'
-#' Can use the summary of another column (\code{target_col}), or specify the order manually (\code{factor_order})
+#' Can use the summary of another column (\code{target_col}), or specify the order manually (\code{factor_order}).
 #'
-#' @param df the data frame to sort
-#' @param target_col the column (character or factor) to convert to ordered factor
-#' @param value_col the column to use to sort \code{target_col}
-#' @param fun function to use to summarize \code{value_col}
-#' @param ... other options passed on to \code{fun} (eg. \code{na.rm = TRUE})
-#' @param desc should \code{target_col} be sorted according to \code{value_col} in a descending order (default \code{FALSE})
-#' @param factor_order a character vector of the unique values in \code{target_col} in the desired order.
+#' @param df The data frame to sort.
+#' @param target_col The column (character or factor) to convert to ordered factor.
+#' @param value_col The column to use to sort \code{target_col}.
+#' @param fun Function to use to summarize \code{value_col}.
+#' @param ... Other options passed on to \code{fun} (eg. \code{na.rm = TRUE}).
+#' @param desc Should \code{target_col} be sorted according to \code{value_col} in a descending order (default \code{FALSE}).
+#' @param factor_order A character vector of the unique values in \code{target_col} in the desired order.
 #'
 #' @return data frame
 #' @export

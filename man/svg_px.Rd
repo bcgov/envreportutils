@@ -11,12 +11,12 @@ svg_px(file = "Rplots.svg", width = 800, height = 800, res = 72,
 \arguments{
 \item{file}{The file where output will appear.}
 
-\item{width}{the width of the plot in pixels. Default \code{800}.}
+\item{width}{The width of the plot in pixels. Default \code{800}.}
 
-\item{height}{the height of the plot in pixels. Default \code{800}.}
+\item{height}{The height of the plot in pixels. Default \code{800}.}
 
-\item{res}{the resolution at which it is displayed. Default \code{72}. 
-You should rarely have to change this}
+\item{res}{The resolution at which it is displayed. Default \code{72}. 
+You should rarely have to change this.}
 
 \item{bg}{Default background color for the plot (defaults to "white").}
 
@@ -40,7 +40,7 @@ the font alias in the SVG output and \code{file} the path to a
 font file.}
 }
 \value{
-A plot device is opened: nothing is returned to the R interpreter.
+A plot device is opened: nothing is returned to the R interpreter
 }
 \description{
 This is a thin wrapper around \code{\link[svglite]{svglite}} 

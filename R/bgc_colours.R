@@ -1,7 +1,7 @@
 #' Get colour codes for B.C. Biogeoclimatic (BGC) Zones
 #'
 #' @param which Optionally specify the codes for the BGC zones you want. 
-#' If \code{NULL} (the default), will return colours for all zones
+#' If \code{NULL} (the default), will return colours for all zones.
 #'
 #' @return A named character vector of hexadecimal colour codes, where the names are BGC Zone codes
 #' @export

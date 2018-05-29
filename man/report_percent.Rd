@@ -7,15 +7,15 @@
 report_percent(x, round_90_to_one = FALSE, as_char = TRUE)
 }
 \arguments{
-\item{x}{numerice vector of percentages}
+\item{x}{Numeric vector of percentages.}
 
-\item{round_90_to_one}{Should values above 90% be reported to a single 
+\item{round_90_to_one}{Should values above 90 percent be reported to a single 
 decimal place?}
 
-\item{as_char}{should the result be returned as a character vector? Default `TRUE`}
+\item{as_char}{Should the result be returned as a character vector? Default `TRUE`.}
 }
 \value{
-character vector of formatted percentages following these rounding rules
+Character vector of formatted percentages following these rounding rules
 }
 \description{
 Follows the advice from: http://adc.bmj.com/content/early/2015/04/15/archdischild-2014-307149

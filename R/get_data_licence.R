@@ -10,7 +10,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and limitations under the License.
 
-#' Returns a url, or a markdown or html-formatted link to one of several B.C. or Canadian licences
+#' Returns a url, or a markdown-formatted or html-formatted link to one of several B.C. or Canadian licences
 #'
 #' @param licence Which licence? One of:
 #' \itemize{
@@ -26,7 +26,7 @@
 #'   \item url The url of the licence
 #' }
 #'
-#' @return character containing the desired output
+#' @return Character containing the desired output
 #' @aliases get_data_license
 #' @export
 #'
