@@ -11,10 +11,33 @@ svg_px(file = "Rplots.svg", width = 800, height = 800, res = 72,
 \arguments{
 \item{width}{The width of the plot in pixels. Default \code{800}.}
 
-\item{height}{The height of the plot in pixels. Default \code{800} .}
+\item{height}{The height of the plot in pixels. Default \code{800}.}
 
 \item{res}{The resolution at which it is displayed. Default \code{72}. 
 You should rarely have to change this.}
+
+\item{...}{Arguments passed on to \code{svglite::svglite}
+\describe{
+  \item{file}{The file where output will appear.}
+  \item{height}{Height and width in inches.}
+  \item{width}{Height and width in inches.}
+  \item{bg}{Default background color for the plot (defaults to "white").}
+  \item{pointsize}{Default point size.}
+  \item{standalone}{Produce a standalone svg file? If \code{FALSE}, omits
+xml header and default namespace.}
+  \item{system_fonts}{Named list of font names to be aliased with
+fonts installed on your system. If unspecified, the R default
+families \code{sans}, \code{serif}, \code{mono} and \code{symbol}
+are aliased to the family returned by
+\code{\link[gdtools]{match_family}()}.}
+  \item{user_fonts}{Named list of fonts to be aliased with font files
+provided by the user rather than fonts properly installed on the
+system. The aliases can be fonts from the fontquiver package,
+strings containing a path to a font file, or a list containing
+\code{name} and \code{file} elements with \code{name} indicating
+the font alias in the SVG output and \code{file} the path to a
+font file.}
+}}
 }
 \value{
 A plot device is opened: nothing is returned to the R interpreter

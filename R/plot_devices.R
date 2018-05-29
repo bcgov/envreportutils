@@ -44,10 +44,10 @@ png_retina <- function(filename = "Rplot%03d.png", width = 480, height = 480,
 #' size in pixels, which is more useful for web work. Internally, it simply 
 #' converts the width and height to inches at the resolution specified. 
 #'
-#' @inheritParams svglite::svglite
+#' @inheritDotParams svglite::svglite
 #' 
 #' @param width The width of the plot in pixels. Default \code{800}.
-#' @param height The height of the plot in pixels. Default \code{800} .
+#' @param height The height of the plot in pixels. Default \code{800}.
 #' @param res The resolution at which it is displayed. Default \code{72}. 
 #' You should rarely have to change this.
 #'
