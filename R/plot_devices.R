@@ -30,8 +30,9 @@ png_retina <- function(filename = "Rplot%03d.png", width = 480, height = 480,
   
   argslist <- as.list(match.call(expand.dots = TRUE)[-1])
   
-  argslist$height <- height * 2
+  argslist$filename <- filename
   argslist$width <- width * 2
+  argslist$height <- height * 2
   argslist$res <- ifelse(is.na(res), 144, res * 2)
   
   do.call(grDevices::png, argslist)
