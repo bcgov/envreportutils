@@ -44,3 +44,24 @@ report_percent <- function(x, round_90_to_one = FALSE, as_char = TRUE) {
   y
   
 }
+
+#' Convert a word or phrase to Title Case
+#'
+#' @param x character string
+#'
+#' @return A character string: x in Title Case
+#' @export
+#'
+#' @examples
+#' x <- "hello world"
+#' to_titlecase(x)
+#' 
+#' x <- "HELLO WORLD"
+#' to_titlecase(x)
+#' 
+#' x <- "heLLo WoRLd"
+#' to_titlecase(x)
+to_titlecase <- function(x) {
+  if (!is.character(x)) stop("x must be a character string", call. = FALSE)
+  tools::toTitleCase(tolower(x))  
+}

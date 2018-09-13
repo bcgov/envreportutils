@@ -11,3 +11,10 @@ test_that("report_percent works", {
   expect_equal(report_percent(test_vec, round_90_to_one = TRUE, as_char = FALSE), 
                c(1.6, 9.8, 25.0, 90.3, 99.4, 99.7))
 })
+
+test_that("to_titlecase works", {
+  x <- c("hello world", "HELLO WORLD", "heLLo WoRLd")
+  expect_equal(to_titlecase(x), rep("Hello World", 3))
+  
+  expect_error(to_titlecase(5), "x must be a character string")
+})

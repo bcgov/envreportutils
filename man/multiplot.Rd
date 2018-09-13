@@ -5,9 +5,9 @@
 \title{Plot multiple plots in a single pane. This function stills work but will be removed (defunct)
 in the next version of the package. The `cowplot` and `patchwork` packages have the same functionality.}
 \usage{
-multiplot(..., plotlist = NULL, cols = 1, layout = NULL, widths = NULL,
-  heights = NULL, title = NULL, titlefont = "", titleface = 1,
-  titlesize = 16)
+multiplot(..., plotlist = NULL, cols = 1, layout = NULL,
+  widths = NULL, heights = NULL, title = NULL, titlefont = "",
+  titleface = 1, titlesize = 16)
 }
 \arguments{
 \item{...}{Two or more ggplot2 objects.}
