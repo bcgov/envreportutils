@@ -1,3 +1,8 @@
+# envreportutils 0.7
+
+* Added new function `to_titlecase()`
+* Added new `soft()` function to use ENV SOFT utility from within R
+
 # envreportutils 0.6.3
 
 * Added new function `report_percent()` to format percentages in a standard way.
