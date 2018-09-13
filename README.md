@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# envreportutils 0.6.3
+# envreportutils 0.7
 
 <a rel="Delivery" href="https://github.com/BCDevExchange/assets/blob/master/README.md"><img alt="In production, but maybe in Alpha or Beta. Intended to persist and be supported." style="border-width:0" src="https://assets.bcdevexchange.org/images/badges/delivery.svg" title="In production, but maybe in Alpha or Beta. Intended to persist and be supported." /></a>[![Travis-CI
 Build
@@ -39,6 +39,8 @@ Currently there are six main functions:
     for the same functionality)
   - `report_percent()` - perform standardized rounding of percentage
     values for reporting.
+  - `to_titlecase()` - simple helper function to convert `"AnY stRanGELy
+    forMaTTed STring"` to `"Title Case"`.
 
 The package also installs an [RStudio
 Addin](https://rstudio.github.io/rstudioaddins/) for adding a custom

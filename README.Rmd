@@ -36,6 +36,7 @@ Currently there are six main functions:
 - `get_data_licence()` - get the url, or a markdown or html-formatted link to one of several B.C. or Canadian licences
 - `order_df()` - order a data frame using summary of a specified column or specify the order manually (this function is deprecated, see [`forcats::fct_reorder`](https://cran.r-project.org/web/packages/forcats/index.html) for the same functionality)
 - `report_percent()` - perform standardized rounding of percentage values for reporting.
+- `to_titlecase()` - simple helper function to convert `"AnY stRanGELy forMaTTed STring"` to `"Title Case"`.
 
 The package also installs an [RStudio Addin](https://rstudio.github.io/rstudioaddins/) for adding a custom footer to READMEs for projects maintained by [Environmental Reporting BC](https://github.com/bcgov/EnvReportBC).
 
