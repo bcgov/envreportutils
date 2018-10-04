@@ -43,3 +43,14 @@ add_bc_home_button <- function(map, ...) {
   
   map
 }
+
+#' Set Leaflet map view to B.C.
+#'
+#' @param map a Leaflet map object
+#' @param zoom Zoom level, default `5`
+#'
+#' @return a Leaflet map object
+#' @export
+set_bc_view <- function(map, zoom = 5) {
+  leaflet::setView(map, lng = -126.5, lat = 54.5, zoom = zoom)
+}
