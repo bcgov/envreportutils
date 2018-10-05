@@ -9,6 +9,7 @@ Authors@R: c(person("Andy", "Teucher", role = c("aut", "cre"), email =
     person("Province of British Columbia", role = "cph"))
 Description: Miscellaneous functions for common things we run into.
 Depends:
+    R (>= 2.10),
     extrafont (>= 0.17)
 Imports:
     ggplot2 (>= 2.2.0),
@@ -23,6 +24,8 @@ Imports:
 License: Apache License (== 2.0) | file LICENSE
 LazyData: true
 Suggests:
-    testthat
+    testthat,
+    leaflet,
+    htmltools
 RoxygenNote: 6.1.0
 Encoding: UTF-8
