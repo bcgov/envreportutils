@@ -55,6 +55,54 @@ set_bc_view <- function(map, zoom = 5) {
   leaflet::setView(map, lng = -126.5, lat = 54.5, zoom = zoom)
 }
 
+#' Re-centre map to B.C. on popup close
+#' 
+#' @param map Map. A Leaflet map object
+#' @param zoom Numeric. Zoom level, default `5`
+#' 
+#' @return A Leaflet map object
+#' 
+#' @export
+
+set_bc_view_on_close <- function(map, zoom = 5) {
+  htmlwidgets::onRender(map, jsCode = htmlwidgets::JS(paste0("
+    function(el, x) {
+      var map = this;
+      map.on('popupclose',
+        function (e) {
+          map.setView({lon: -126.5, lat: 54.5}, ", zoom, ");
+        })
+    }")))
+}
+
+#' Keep popups centred in view port
+#' 
+#' Reloads popups the first time they're opened to correctly pan popup in
+#' display. Based on https://stackoverflow.com/a/38172374, EDIT 2 (example:
+#' https://jsfiddle.net/3v7hd2vx/277/)
+#' 
+#' @param map Map. A Leaflet map object
+#' 
+#' @return A Leaflet map object
+#' 
+#' @export
+popups_centre <- function(map) {
+  htmlwidgets::onRender(map, jsCode = htmlwidgets::JS(paste0("
+    function(el, x) {
+      var map = this;
+      document.querySelector('.leaflet-popup-pane').addEventListener('load', function (event) {
+	      var target = event.target,
+  		  tagName = target.tagName,
+        popup = map._popup;
+        //console.log('got load event from ' + tagName);
+        if (tagName === 'IMG' && popup) {
+  	      popup.update();
+        }
+      }, true);
+    }")))
+}
+
+
 create_popup_caaqs <- function(data, caaqs = "o3", type = "polygon") {
   
   data %>%
