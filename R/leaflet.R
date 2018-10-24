@@ -178,6 +178,21 @@ content_popup_caaqs_standard <- function(data, caaqs) {
                                                 TRUE ~ as.character(NA)))
 }
 
+popup_create_row <- function(...) {
+  paste0("<div class = 'popup-row'>\n  ", ..., "\n</div>\n")
+}
+
+popup_combine_rows <- function(data) {
+
+  cols <- names(data)[stringr::str_detect(names(data), "popup_row")]
+  if(length(cols) == 1) return(data[, cols])
+  
+  cols <- as.list(data[, cols])
+  data <- dplyr::mutate(data,
+                        popup = purrr::pmap(cols, ~htmltools::HTML(paste0(...))))
+  data$popup
+}
+
 #' Create content of leaflet popups for groundwater levels
 #' 
 #' This is a helper function to format popups containing figures and information
@@ -194,48 +209,63 @@ content_popup_caaqs_standard <- function(data, caaqs) {
 #'   well number and the trend state, respectively.
 #'
 #' @export
-create_popup_groundwater <- function(data, type = "well") {
+popup_groundwater <- function(data, type = "well") {
+  if("sf" %in% class(data)) data <- as.data.frame(data)
+  data <- popup_content_groundwater(data, type) 
+  
+  if(type == "well") {
+    data <- dplyr::mutate(data,
+                          popup_row1 = popup_create_row(.data$info, .data$svg_month),
+                          popup_row2 = popup_create_row(.data$svg_wide))
+  } else if (type == "region") {
+    data <- dplyr::mutate(data,
+                          popup_row1 = popup_create_row(.data$title),
+                          popup_row2 = popup_create_row(.data$svg_wide))
+  }
 
-  data %>%
-    # Define individual elements
-    content_popup_groundwater(., type) %>%
-    mutate(
-      popup_svg_wide = case_when(type == "well" ~ paste0("./well_plots/area_", 
-                                                         .data$well_num, ".svg"),
-                                 type == "region" ~ paste0("./regional_plots/summary_", 
-                                                           .data$region_name_short, ".svg")),
-      # Create the rows
-      popup_row1 = paste0("<div class = 'popup-row'>\n", .data$popup_info, "</div>\n"),
-      popup_row2 = paste0("<div class = 'popup-row'><img src = ", .data$popup_svg_wide, "></div>"),
-      # Assemble them all together
-      popup = pmap(list(.data$popup_row1, .data$popup_row2),
-                   ~HTML(paste0(..1, ..2))))
+  popup_combine_rows(data)
 }
 
-content_popup_groundwater <- function(data, type) {
+popup_content_groundwater <- function(data, type) {
+  data <- dplyr::mutate(data, region_name = paste0("Region: ", .data$region_name))
   if(type == "well") {
     data <- data %>%
-      mutate(gw_map = paste0("https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=b53cb0bf3f6848e79d66ffd09b74f00d&find=OBS%20WELL%20", sprintf("%03d", .data$well_num)),
-             region_name = paste0("Region: ", .data$region_name),
-             well_name = paste0("Observation Well: ", .data$well_num),
-             title = case_when(type == "well" ~ .data$well_name,
-                               type == "region" ~ .data$region_name),
-             subtitle = case_when(type == "well" ~ .data$region_name,
-                                  type == "region" ~ .data$well_name),
-             popup_svg_month = paste0("./well_plots/month_", .data$well_num, ".svg"),
-             popup_info = paste0("  <div class = 'section-info'>\n", 
-                                 "      <div class = 'title'>\n", 
-                                 "        <h2>", .data$title, "</h2>\n", 
-                                 "        <h4>", .data$subtitle, "</h4>\n",
-                                 "      </div>\n",
-                                 "      <div>\n",
-                                 "        <h3>Trend Category: ", .data$state, "</h3>\n",
-                                 "        <h3><a href = '", gw_map, "' target='_blank'>See GW interactive map</a></h3>\n",
-                                 "      </div>\n",
-                                 "  </div>\n",
-                                 "  <div class = 'section-monthly-plot'>\n",
-                                 "    <img src = ", .data$popup_svg_month, ">\n",
-                                 "  </div>\n"))
-  } else data <- mutate(data, popup_info = "")
+      dplyr::mutate(svg_wide = paste0("<img src = './well_plots/area_", 
+                                      .data$well_num, ".svg'>"),
+                    gw_map = paste0("https://governmentofbc.maps.arcgis.com/apps/",
+                                    "webappviewer/index.html?id=b53cb0bf3f6848e79",
+                                    "d66ffd09b74f00d&find=OBS%20WELL%20", 
+                                    sprintf("%03d", .data$well_num)),
+                    well_name = paste0("Observation Well: ", .data$well_num),
+                    title = .data$well_name,
+                    subtitle = .data$region_name,
+                    info = paste0("  <div class = 'section-info'>\n", 
+                                  "      <div class = 'popup-title'>\n", 
+                                  "        <h2>", .data$title, "</h2>\n", 
+                                  "        <h4>", .data$subtitle, "</h4>\n",
+                                  "      </div>\n",
+                                  "      <div class = 'popup-badge' ",
+                                             "style = 'background-color: ", col,";
+                                                       color: ", col_text, "'>\n",
+                                  "        <h4>Trend Category:</h4>\n", 
+                                  "        <h2>", .data$state, "</h2>\n",
+                                  "      </div>\n",
+                                  "      <div style = 'text-align: center'>\n",
+                                  "        <h4><strong>More info: </strong><a href = '", gw_map, 
+                                  "' target='_blank'>GW interactive map</a></h4>\n",
+                                  "      </div>\n",
+                                  "  </div>\n"),
+                    svg_month = paste0("./well_plots/month_", .data$well_num, ".svg"),
+                    svg_month = paste0("  <div class = 'section-column-plot'>\n",
+                                       "    <img src = ", .data$svg_month, ">\n",
+                                       "  </div>\n"))
+  } else {
+    data <- dplyr::mutate(data, 
+                          svg_wide = paste0("<img src = './regional_plots/summary_", 
+                                              .data$region_name_short, ".svg'>\n"),
+                          title = paste0("  <div class = 'popup-title'>\n", 
+                                         "        <h2>", .data$region_name, "</h2>\n", 
+                                         "  </div>\n"))
+  }
   data
 }
