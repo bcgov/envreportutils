@@ -113,23 +113,6 @@ html.lt-ie9 .info {
 	border: 1px solid #999;
 }
 
-
-/****************
-Markers
-****************/
-
-/* Add opacity change on hover */
-
-.leaflet-marker-icon {
-/* opacity: 0.8;*/
-/* filter: alpha(opacity = 80);*/ /* For IE8 and earlier */
-}
-
-.leaflet-marker-icon:hover {
-  /*opacity: 1.0;*/
-  /*filter: alpha(opacity = 100); *//* For IE8 and earlier */
-}
-
 /****************
 Labels
 ****************/
@@ -308,25 +291,9 @@ Labels
   margin-bottom: 0em;
 }
 
-.popup-row h3 {
-	padding-top: 10px;
-	padding-bottom: 5px;
-}
-
 /* .leaflet-popup-content-wrapper img { */
 /*	width: 778px; */
 /* height: 254px; */
 /*}*/
 
-.leaflet-popup-content-wrapper .no-photo {
-	display: table;
-	width: 778px;
-	height: 254px;
-	background-color: #efefef;
-}
 
-.leaflet-popup-content-wrapper .no-photo h2 {
-	display: table-cell;
-	vertical-align: middle;
-	text-align: center;
-}
