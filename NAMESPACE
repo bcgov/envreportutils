@@ -2,6 +2,7 @@
 
 export(add_bc_home_button)
 export(bgc_colours)
+export(create_popup_groundwater)
 export(get_data_licence)
 export(get_data_license)
 export(multiplot)
