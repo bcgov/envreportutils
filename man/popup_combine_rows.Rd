@@ -7,7 +7,8 @@
 popup_combine_rows(data)
 }
 \arguments{
-\item{Character.}{Row content}
+\item{data}{Data frame including one or more columns: "popup_row1",
+"popup_row2", etc.}
 }
 \description{
 Combine popup rows for leaflet maps

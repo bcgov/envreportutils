@@ -7,7 +7,7 @@
 popup_create_row(...)
 }
 \arguments{
-\item{Character.}{Row content}
+\item{...}{Character. Row content}
 }
 \description{
 Create a popup row div for leaflet maps

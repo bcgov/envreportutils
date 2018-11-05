@@ -104,7 +104,7 @@ popups_centre <- function(map) {
 
 #' Create a popup row div for leaflet maps
 #' 
-#' @param Character. Row content
+#' @param ... Character. Row content
 #'
 #' @export
 popup_create_row <- function(...) {
@@ -113,9 +113,9 @@ popup_create_row <- function(...) {
 
 #' Combine popup rows for leaflet maps
 #' 
-#' @param Character. Row content
+#' @param data Data frame including one or more columns: "popup_row1",
+#'   "popup_row2", etc.
 #'
-#' @export
 #' @export
 popup_combine_rows <- function(data) {
 
