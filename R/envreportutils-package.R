@@ -18,4 +18,5 @@
 #'
 #' @name envreportutils
 #' @docType package
+#' @importFrom rlang .data
 NULL
