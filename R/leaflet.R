@@ -75,33 +75,6 @@ set_bc_view_on_close <- function(map, zoom = 5) {
     }")))
 }
 
-#' Keep popups centred in view port
-#' 
-#' Reloads popups the first time they're opened to correctly pan popup in
-#' display. Based on https://stackoverflow.com/a/38172374, EDIT 2 (example:
-#' https://jsfiddle.net/3v7hd2vx/277/)
-#' 
-#' @param map Map. A Leaflet map object
-#' 
-#' @return A Leaflet map object
-#' 
-#' @export
-popups_centre <- function(map) {
-  htmlwidgets::onRender(map, jsCode = htmlwidgets::JS(paste0("
-    function(el, x) {
-      var map = this;
-      document.querySelector('.leaflet-popup-pane').addEventListener('load', function (event) {
-	      var target = event.target,
-  		  tagName = target.tagName,
-        popup = map._popup;
-        //console.log('got load event from ' + tagName);
-        if (tagName === 'IMG' && popup) {
-  	      popup.update();
-        }
-      }, true);
-    }")))
-}
-
 #' Create a popup row div for leaflet maps
 #' 
 #' @param ... Character. Row content
@@ -117,6 +90,7 @@ popup_create_row <- function(...) {
 #'   "popup_row2", etc.
 #'
 #' @export
+
 popup_combine_rows <- function(data) {
 
   cols <- names(data)[stringr::str_detect(names(data), "popup_row")]
@@ -126,4 +100,105 @@ popup_combine_rows <- function(data) {
   data <- dplyr::mutate(data,
                         popup = purrr::pmap(cols, ~htmltools::HTML(paste0(...))))
   data$popup
+}
+
+#' Create popup for CAAQS indicators
+#'
+#' @param data Data Frame. CAAQ information
+#' @param type Character. Which type of popup? "station" or "region"?
+#' @param metric_name Character. Display name of the CAAQ metric in HTML code
+#'   (e.g., "Ozone Metric", or "PM<sub>2.5</sub> Metric (annual)").
+#' @param units Character. Metric units in HTML code (e.g., "ppm" or
+#'   "&mu;g/m&sup3;")
+#' @param standard_name Character. Display name of the CAAQ standard in HTML
+#'   code (e.g., "Ozone Air Quality Standard" or "PM<sub>2.5</sub> Air Quality
+#'   Standard (annual)")
+#'   
+#' @details Data frame must contain the following columns: 'p_az' reflecting the
+#'   airzone name, 'p_station_id' reflecting the station id, 'p_station'
+#'   reflecting the station name, 'metric_value' reflecting the CAAQS metric
+#'   value, 'caaqs' reflecting the CAAQS status (not in HTML code), and
+#'   'n_years' reflecting the number of years the CAAQS metric is averaged over.
+#'
+#' @return Character vector of the HTML code for the popup to be passed to
+#'   leaflet
+#'
+#' @export
+
+popup_caaqs <- function(data, type = "station", metric_name, units, standard_name) {
+  if("sf" %in% class(data)) data <- as.data.frame(data)
+  
+  # Define individual elements
+  data <- popup_caaqs_title(data, type)
+  data <- popup_caaqs_metric(data, metric_name, units)
+  data <- popup_caaqs_standard(data, standard_name)
+  data <- dplyr::mutate(data, 
+                        popup_row1 = popup_create_row(.data$title),
+                        popup_row2 = popup_create_row(.data$info_metric, .data$info_standard),
+                        popup_row3 = paste0("<img src = ", 
+                                            paste0("./station_plots/", .data$p_station_id, 
+                                                   "_lineplot.svg"), 
+                                      ">"))
+  
+  
+  popup_combine_rows(data)
+}
+
+popup_caaqs_title <- function(data, type) {
+  if(type == "region") {
+    data <- dplyr::mutate(data, title = paste0("    <h2>Air Zone: ", .data$p_az, "</h2>\n",
+                                               "    <h4>Station: ", .data$p_station, "</h4>\n"))
+  } else if(type == "station") {
+    data <- dplyr::mutate(data, title = paste0("    <h2>Station: ", .data$p_station, "</h2>\n",
+                                               "    <h4>Air Zone: ", .data$p_az, "</h4>\n"))
+  }
+  dplyr::mutate(data, 
+                title = paste0("  <div class = 'title'>\n", .data$title, "  </div>\n"))
+}
+
+popup_caaqs_metric <- function(data, metric_name, units) {
+
+  dplyr::mutate(data,
+                info_metric = dplyr::if_else(.data$caaqs == "Insufficient Data", 
+                                             .data$caaqs, paste(.data$metric_value, units)),
+                info_metric = paste0("    <h4>", metric_name, "</h4>\n",
+                                     "    <h3>", .data$info_metric, "</h3>\n"),
+                info_metric = dplyr::if_else(.data$caaqs == "Insufficient Data",
+                                             .data$info_metric,
+                                             paste0(.data$info_metric, 
+                                                    "    <span>(", .data$n_years, 
+                                                    " year average)</span>\n")),
+                info_metric = paste0("  <div class = 'section-metric'>\n", 
+                                     .data$info_metric, "  </div>\n"))
+}
+
+popup_caaqs_standard <- function(data, standard_name) {
+
+  dplyr::mutate(data, 
+                info_standard = paste0("    <h4>", standard_name, "</h4>\n",
+                                       "    <h2>", .data$caaqs, "</h2>\n"),
+                info_standard_col = dplyr::case_when(.data$caaqs == "Achieved" ~ "#377EB8",
+                                                     .data$caaqs == "Not Achieved" ~ "#B8373E",
+                                                     .data$caaqs == "Insufficient Data" ~ "#CCCCCC",
+                                                     TRUE ~ as.character(NA)),
+                info_standard = paste0("  <div class = 'section-standard' ",
+                                       "style = 'background-color: ", 
+                                       .data$info_standard_col, "'>\n",
+                                       .data$info_standard, "  </div>\n"))
+}
+
+#' Create copy of CAAQS CSS styles for leaflet map
+#'
+#' Creates a copy in the local repository of the CAAQS CSS file.
+#'
+#' @param folder Character. Location of the leaflet maps folder.
+#' @param overwrite Logical. Overwrite the CSS file if it already exits?
+#'
+#' @export
+
+css_caaqs_copy <- function(folder = "./leaflet_map", overwrite = FALSE) {
+  loc <- paste0(folder, "/assets/")
+  if(!file.exists(loc)) dir.create(loc)
+  file.copy(system.file("css", "caaqs-styles.css", package = "envreportutils"),
+            loc, overwrite = overwrite)
 }

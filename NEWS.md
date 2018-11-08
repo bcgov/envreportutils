@@ -1,3 +1,13 @@
+# envreportutils 0.8.0
+
+* Added new function `add_bc_home_button()`
+* Added new function `set_bc_view`
+* Added new function `set_bc_view_on_close`
+* Added new function `css_caaqs_copy`
+* Added new function `popup_caaqs`
+* Added new function `popup_combine_rows`
+* Added new function `popup_create_row`
+
 # envreportutils 0.7
 
 * Added new function `to_titlecase()`
