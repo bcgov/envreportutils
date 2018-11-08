@@ -75,33 +75,6 @@ set_bc_view_on_close <- function(map, zoom = 5) {
     }")))
 }
 
-#' Keep popups centred in view port
-#' 
-#' Reloads popups the first time they're opened to correctly pan popup in
-#' display. Based on https://stackoverflow.com/a/38172374, EDIT 2 (example:
-#' https://jsfiddle.net/3v7hd2vx/277/)
-#' 
-#' @param map Map. A Leaflet map object
-#' 
-#' @return A Leaflet map object
-#' 
-#' @export
-popups_centre <- function(map) {
-  htmlwidgets::onRender(map, jsCode = htmlwidgets::JS(paste0("
-    function(el, x) {
-      var map = this;
-      document.querySelector('.leaflet-popup-pane').addEventListener('load', function (event) {
-	      var target = event.target,
-  		  tagName = target.tagName,
-        popup = map._popup;
-        //console.log('got load event from ' + tagName);
-        if (tagName === 'IMG' && popup) {
-  	      popup.update();
-        }
-      }, true);
-    }")))
-}
-
 #' Create a popup row div for leaflet maps
 #' 
 #' @param ... Character. Row content
