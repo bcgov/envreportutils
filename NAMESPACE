@@ -2,11 +2,13 @@
 
 export(add_bc_home_button)
 export(bgc_colours)
+export(css_caaqs_copy)
 export(get_data_licence)
 export(get_data_license)
 export(multiplot)
 export(order_df)
 export(png_retina)
+export(popup_caaqs)
 export(popup_combine_rows)
 export(popup_create_row)
 export(report_percent)
