@@ -116,8 +116,8 @@ popup_combine_rows <- function(data) {
 #'   
 #' @details Data frame must contain the following columns: 'p_az' reflecting the
 #'   airzone name, 'p_station_id' reflecting the station id, 'p_station'
-#'   reflecting the station name, 'metric_value' reflecting the CAAQS metric
-#'   value, 'caaqs' reflecting the CAAQS status (not in HTML code), and
+#'   reflecting the station name, 'metric_value_ambient' reflecting the CAAQS metric
+#'   value, 'caaqs_ambient' reflecting the CAAQS status (not in HTML code), and
 #'   'n_years' reflecting the number of years the CAAQS metric is averaged over.
 #'
 #' @return Character vector of the HTML code for the popup to be passed to
@@ -159,11 +159,11 @@ popup_caaqs_title <- function(data, type) {
 popup_caaqs_metric <- function(data, metric_name, units) {
 
   dplyr::mutate(data,
-                info_metric = dplyr::if_else(.data$caaqs == "Insufficient Data", 
-                                             .data$caaqs, paste(.data$metric_value, units)),
+                info_metric = dplyr::if_else(.data$caaqs_ambient == "Insufficient Data", 
+                                             .data$caaqs_ambient, paste(.data$metric_value_ambient, units)),
                 info_metric = paste0("    <h4>", metric_name, "</h4>\n",
                                      "    <h3>", .data$info_metric, "</h3>\n"),
-                info_metric = dplyr::if_else(.data$caaqs == "Insufficient Data",
+                info_metric = dplyr::if_else(.data$caaqs_ambient == "Insufficient Data",
                                              .data$info_metric,
                                              paste0(.data$info_metric, 
                                                     "    <span>(", .data$n_years, 
@@ -176,10 +176,10 @@ popup_caaqs_standard <- function(data, standard_name) {
 
   dplyr::mutate(data, 
                 info_standard = paste0("    <h4>", standard_name, "</h4>\n",
-                                       "    <h2>", .data$caaqs, "</h2>\n"),
-                info_standard_col = dplyr::case_when(.data$caaqs == "Achieved" ~ "#377EB8",
-                                                     .data$caaqs == "Not Achieved" ~ "#B8373E",
-                                                     .data$caaqs == "Insufficient Data" ~ "#CCCCCC",
+                                       "    <h2>", .data$caaqs_ambient, "</h2>\n"),
+                info_standard_col = dplyr::case_when(.data$caaqs_ambient == "Achieved" ~ "#377EB8",
+                                                     .data$caaqs_ambient == "Not Achieved" ~ "#B8373E",
+                                                     .data$caaqs_ambient == "Insufficient Data" ~ "#CCCCCC",
                                                      TRUE ~ as.character(NA)),
                 info_standard = paste0("  <div class = 'section-standard' ",
                                        "style = 'background-color: ", 
