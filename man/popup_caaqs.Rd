@@ -31,7 +31,7 @@ Create popup for CAAQS indicators
 \details{
 Data frame must contain the following columns: 'p_az' reflecting the
   airzone name, 'p_station_id' reflecting the station id, 'p_station'
-  reflecting the station name, 'ambient_metric_value' reflecting the CAAQS metric
-  value, 'ambient_caaqs' reflecting the CAAQS status (not in HTML code), and
+  reflecting the station name, 'metric_value_ambient' reflecting the CAAQS metric
+  value, 'caaqs_ambient' reflecting the CAAQS status (not in HTML code), and
   'n_years' reflecting the number of years the CAAQS metric is averaged over.
 }
