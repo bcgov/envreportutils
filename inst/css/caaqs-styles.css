@@ -302,6 +302,7 @@ html.lt-ie9 .blur-overlay {
 	-webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
+  font-size: 14px;
 }
 
 .popup-row .scale {
