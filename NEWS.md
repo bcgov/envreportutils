@@ -1,12 +1,18 @@
 # envreportutils 0.8.0
 
-* Added new function `add_bc_home_button()`
-* Added new function `set_bc_view`
-* Added new function `set_bc_view_on_close`
-* Added new function `css_caaqs_copy`
-* Added new function `popup_caaqs`
-* Added new function `popup_combine_rows`
-* Added new function `popup_create_row`
+* Added a set of functions to help create/customize leaflet maps:
+  * Added new function `add_bc_home_button()`
+  * Added new function `set_bc_view`
+  * Added new function `set_bc_view_on_close`
+  * Added new function `css_caaqs_copy`
+  * Added new function `popup_caaqs`
+  * Added new function `popup_combine_rows`
+  * Added new function `popup_create_row`
+
+* Added new function `soe_path()` to set the path to a file or folder on the SOE
+shared drive to enable platform/user agnostic reading/writing to the SOE shared 
+drive. Also added `set_soe_root()` so each user can set their path to the root
+of the SOE shared drive.
 
 # envreportutils 0.7
 

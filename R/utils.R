@@ -65,3 +65,73 @@ to_titlecase <- function(x) {
   if (!is.character(x)) stop("x must be a character string", call. = FALSE)
   tools::toTitleCase(tolower(x))  
 }
+
+#' Specify a path to a folder or file in the SOE folder on the network drive
+#'
+#' @param x character. Path to a file or folder, relative to `pickaxe/SOE`
+#'
+#' @return full path to the file or folder
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' soe_path("Operations ORCS/indicators/air")
+#' # In a function call:
+#' read.csv(soe_path("Operations ORCS/data/foo.csv"))
+#' }
+soe_path <- function(x) {
+  if (!is.character(x)) 
+  stop("x must be a character string denoting a 
+path relative to the SOE root folder (e.g. Operations ORCS/indicators/air/.")
+  root <- get_soe_root()
+  file.path(root, gsub("^/", "", x))
+}
+
+#' Set the path to the root of your SoE network folder
+#' 
+#' This well add an environment variable called `ENVREPORTUTILS_SOE_PATH` to 
+#' your `.Renviron` file and set it to the path on your computer to the 
+#' `pickaxe/SOE` folder.
+#'
+#' @param x character. A path to the SOE folder on the network (pickaxe) drive.
+#' For Mac users it will look something like `"/Users/username/Volumes/pickaxe/SOE"`. 
+#' For Windows users, use the mapped drive letter rather than the UNC path 
+#' (e.g., `"P:/pickaxe/SOE"`)
+#'
+#' @return logical (invisibly)
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # Mac
+#' set_soe_root("/Users/username/Volumes/pickaxe/SOE")
+#' # Windows
+#' set_soe_root("P:/pickaxe/SOE")
+#' }
+set_soe_root <- function(x) {
+  home_dir <- Sys.getenv("HOME")
+  renviron_file <- file.path(home_dir, ".Renviron")
+  renviron_lines <- readLines(renviron_file)
+  soe_path_env <- grepl(paste0("^", soe_path_envvar_name()), renviron_lines)
+  if (any(soe_path_env)) {
+    overwrite <- utils::askYesNo("Your soe path has already been set. Overwrite?")
+    if (!overwrite) return(invisible(FALSE))
+    renviron_lines <- renviron_lines[!soe_path_env]
+  }
+  renviron_lines <- c(renviron_lines, "", "## envreportutils soe path", 
+                      paste0(soe_path_envvar_name(), "=", x), "")
+
+  writeLines(renviron_lines, con = renviron_file)
+  message("Restart R for changes to take effect")
+  invisible(TRUE)
+}
+
+get_soe_root <- function() {
+  soe_root <- Sys.getenv(soe_path_envvar_name())
+  if (!nzchar(soe_root)) {
+    stop("You need to set your soe root path. Use set_soe_root()", call. = FALSE)
+  }
+  soe_root
+}
+
+soe_path_envvar_name <- function() "ENVREPORTUTILS_SOE_PATH"
