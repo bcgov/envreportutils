@@ -109,6 +109,11 @@ path relative to the SOE root folder (e.g. Operations ORCS/indicators/air/.")
 #' set_soe_root("P:/pickaxe/SOE")
 #' }
 set_soe_root <- function(x) {
+  if (.Platform$OS.type == "windows" && grepl("\\\\", x)) {
+    stop("It looks like you are trying to set your SOE path as a UNC path
+(path beginning with \\. Please use the mapped drive letter (E.g., P:/etc).", 
+         call. = FALSE)
+  }
   home_dir <- Sys.getenv("HOME")
   renviron_file <- file.path(home_dir, ".Renviron")
   renviron_lines <- readLines(renviron_file)
