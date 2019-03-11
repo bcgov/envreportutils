@@ -2,11 +2,17 @@
 % Please edit documentation in R/plot_devices.R
 \name{png_retina}
 \alias{png_retina}
+\alias{save_png_retina}
 \title{Create png for retina display}
 \usage{
 png_retina(filename = "Rplot\%03d.png", width = 480, height = 480,
   units = "px", pointsize = 12, bg = "white", res = NA, ...,
   type = c("cairo", "cairo-png", "Xlib", "quartz"), antialias)
+
+save_png_retina(x, filename = "Rplot\%03d.png", width = 480,
+  height = 480, units = "px", pointsize = 12, bg = "white",
+  res = NA, ..., type = c("cairo", "cairo-png", "Xlib", "quartz"),
+  antialias)
 }
 \arguments{
 \item{filename}{the name of the output file.
@@ -55,17 +61,27 @@ png_retina(filename = "Rplot\%03d.png", width = 480, height = 480,
     fills). See \code{\link{X11}}.  The default is set by
     \code{\link{X11.options}}.  Also for \code{type = "quartz"}, where
     antialiasing is used unless \code{antialias = "none"}.}
+
+\item{x}{a ggplot2 object}
 }
 \value{
 A plot device is opened: nothing is returned to the R interpreter
 }
 \description{
-This is a drop-in replacement for the \code{\link[grDevices]{png}} function 
+`png_retina`` is a drop-in replacement for the \code{\link[grDevices]{png}} function 
 for creating images for the web for retina devices. Internally, it simply 
 doubles the width, height, and resolution specified. The intention is then
 that in the webpage that you would specify the \code{width} and \code{height} 
 attributes in the html at the original resolution.
+
+`save_png_retina` is a wrapper function around `png_retina` analagous to 
+[ggplot2::gsave()]
 }
+\section{Functions}{
+\itemize{
+\item \code{save_png_retina}: 
+}}
+
 \examples{
 
 # You want to display at 500 * 500 in the web:
@@ -76,6 +92,11 @@ dev.off()
 # Although the output image will be 1000 * 1000, in the html you would put:
 # <img src="myplot.png", width="500", height="500" />
 
+if (suppressPackageStartupMessages(require("ggplot2", quietly = TRUE))) {
+p <- ggplot(mtcars, aes(x = cyl, y = mpg)) + geom_point()
+file <- tempfile(fileext = ".png")
+save_png_retina(p, file)
+}
 }
 \seealso{
 \code{\link[grDevices]{png}}

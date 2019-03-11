@@ -2,10 +2,15 @@
 % Please edit documentation in R/plot_devices.R
 \name{svg_px}
 \alias{svg_px}
+\alias{save_svg_px}
 \title{Create svg for the web, specifying size in pixels}
 \usage{
 svg_px(file = "Rplots.svg", width = 800, height = 800, res = 72,
   bg = "white", pointsize = 12, standalone = TRUE,
+  system_fonts = list(), user_fonts = list())
+
+save_svg_px(x, file = "Rplots.svg", width = 800, height = 800,
+  res = 72, bg = "white", pointsize = 12, standalone = TRUE,
   system_fonts = list(), user_fonts = list())
 }
 \arguments{
@@ -38,6 +43,8 @@ strings containing a path to a font file, or a list containing
 \code{name} and \code{file} elements with \code{name} indicating
 the font alias in the SVG output and \code{file} the path to a
 font file.}
+
+\item{x}{a ggplot2 object}
 }
 \value{
 A plot device is opened: nothing is returned to the R interpreter
@@ -47,13 +54,26 @@ This is a thin wrapper around \code{\link[svglite]{svglite}}
 for creating images for the web in svg format, but enables you specify the 
 size in pixels, which is more useful for web work. Internally, it simply 
 converts the width and height to inches at the resolution specified.
+
+`save_svg_px` is a wrapper function around `svg_px` analagous to 
+[ggplot2::gsave()]
 }
+\section{Functions}{
+\itemize{
+\item \code{save_svg_px}: 
+}}
+
 \examples{
 
 # You want to display at 500 * 500 in the web:
 svg_px("myplot.png", width = 500, height = 500)
 plot(x = 1:500, y = rnorm(500))
 dev.off()
+if (suppressPackageStartupMessages(require("ggplot2", quietly = TRUE))) {
+p <- ggplot(mtcars, aes(x = cyl, y = mpg)) + geom_point()
+file <- tempfile(fileext = ".svg")
+save_svg_px(p, file)
+}
 }
 \seealso{
 \code{\link[svglite]{svglite}}

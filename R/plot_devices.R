@@ -1,6 +1,6 @@
 #' Create png for retina display
 #' 
-#' This is a drop-in replacement for the \code{\link[grDevices]{png}} function 
+#' `png_retina`` is a drop-in replacement for the \code{\link[grDevices]{png}} function 
 #' for creating images for the web for retina devices. Internally, it simply 
 #' doubles the width, height, and resolution specified. The intention is then
 #' that in the webpage that you would specify the \code{width} and \code{height} 
@@ -82,4 +82,71 @@ svg_px <- function(file = "Rplots.svg", width = 800, height = 800, res = 72, bg 
   svglite::svglite(file = file, width = width, height = height, bg = bg, 
                    pointsize = pointsize, standalone = standalone, 
                    system_fonts = system_fonts, user_fonts = user_fonts)
+}
+
+#' Save a ggplot to a png for retina display
+#' 
+#' `save_png_retina` is a wrapper function around `png_retina` analagous to 
+#' [ggplot2::gsave()]
+#'
+#' @param x a ggplot2 object
+#' @inheritParams png_retina
+#' @describeIn png_retina
+#'
+#' @return NULL
+#' @export
+#' 
+#' @examples 
+#' if (suppressPackageStartupMessages(require("ggplot2", quietly = TRUE))) {
+#' p <- ggplot(mtcars, aes(x = cyl, y = mpg)) + geom_point()
+#' file <- tempfile(fileext = ".png")
+#' save_png_retina(p, file)
+#' }
+save_png_retina <- function(x, filename = "Rplot%03d.png", width = 480, height = 480, 
+                            units = "px", pointsize = 12, bg = "white",  res = NA, 
+                            ..., type = c("cairo", "cairo-png", "Xlib", "quartz"), 
+                            antialias) {
+  on.exit(graphics_exit(grDevices::dev.cur()))
+  png_retina(filename = filename, width = width, height = height, units = units,
+             pointsize = pointsize, bg = bg, res = res, ..., type = type, 
+             antialias = antialias)
+  graphics::plot(x)
+  invisible(NULL)
+}
+
+#' Save a ggplot to an svg file using pixel dimensions
+#' 
+#' `save_svg_px` is a wrapper function around `svg_px` analagous to 
+#' [ggplot2::gsave()]
+#'
+#' @param x a ggplot2 object
+#' @inheritParams svg_px
+#' @describeIn svg_px
+#'
+#' @return NULL
+#' @export
+#' 
+#' @examples 
+#' if (suppressPackageStartupMessages(require("ggplot2", quietly = TRUE))) {
+#' p <- ggplot(mtcars, aes(x = cyl, y = mpg)) + geom_point()
+#' file <- tempfile(fileext = ".svg")
+#' save_svg_px(p, file)
+#' }
+save_svg_px <- function(x, file = "Rplots.svg", width = 800, height = 800, 
+                        res = 72, bg = "white", pointsize = 12, 
+                        standalone = TRUE, system_fonts = list(), 
+                        user_fonts = list()) {
+  on.exit(graphics_exit(grDevices::dev.cur()))
+  svg_px(file = file, width = width, height = height, res = res, bg = bg, 
+         pointsize = pointsize, standalone = standalone, 
+         system_fonts = system_fonts, user_fonts = user_fonts)
+  graphics::plot(x)
+  invisible(NULL)
+}
+
+graphics_exit <- function(old_dev) {
+  utils::capture.output({
+    grDevices::dev.off()
+    if (old_dev > 1) grDevices::dev.set(old_dev)
+  })
 }
