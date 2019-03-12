@@ -1,6 +1,6 @@
 #' Create png for retina display
 #' 
-#' `png_retina`` is a drop-in replacement for the \code{\link[grDevices]{png}} function 
+#' `png_retina` is a drop-in replacement for the \code{\link[grDevices]{png}} function 
 #' for creating images for the web for retina devices. Internally, it simply 
 #' doubles the width, height, and resolution specified. The intention is then
 #' that in the webpage that you would specify the \code{width} and \code{height} 
