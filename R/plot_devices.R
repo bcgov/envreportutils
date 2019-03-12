@@ -28,14 +28,13 @@ png_retina <- function(filename = "Rplot%03d.png", width = 480, height = 480,
                        ..., type = c("cairo", "cairo-png", "Xlib", "quartz"), 
                        antialias) {
   
-  argslist <- as.list(match.call(expand.dots = TRUE)[-1])
+  width <- width * 2
+  height <- height * 2
+  res <- ifelse(is.na(res), 144, res * 2)
   
-  argslist$filename <- filename
-  argslist$width <- width * 2
-  argslist$height <- height * 2
-  argslist$res <- ifelse(is.na(res), 144, res * 2)
-  
-  do.call(grDevices::png, argslist)
+  grDevices::png(filename = filename, width = width, height = height, units = units, 
+                 pointsize = pointsize, bg = bg, res = res, ..., 
+                 type = type, antialias = antialias)
 }
 
 #' Create svg for the web, specifying size in pixels
