@@ -16,7 +16,7 @@ For Windows users, use the mapped drive letter rather than the UNC path
 logical (invisibly)
 }
 \description{
-This well add an environment variable called `ENVREPORTUTILS_SOE_PATH` to 
+This will add an environment variable called `ENVREPORTUTILS_SOE_PATH` to 
 your `.Renviron` file and set it to the path on your computer to the 
 `pickaxe/SOE` folder.
 }

@@ -32,8 +32,8 @@ An [R](https://www.r-project.org/) package with [ggplot2](http://ggplot2.org/) t
 - `theme_soe()` - default `ggplot2` theme for Environmental Reporting BC graphs
 - `theme_soe_facet()` - default `ggplot2` theme for Environmental Reporting BC graphs using facetting
 - `bgc_colours()` - get colour codes for B.C. Biogeoclimatic (BGC) Zones
-- `svg_px()` - create svg for the web, specifying size in pixels
-- `png_retina()` - create png for retina display
+- `svg_px()` & `save_svg_px()`- create and save svg for the web, specifying size in pixels
+- `png_retina()` & `save_png_retina()` - create and save png for retina display
 
 **Data wrangling & sharing functions:**
 
@@ -41,6 +41,7 @@ An [R](https://www.r-project.org/) package with [ggplot2](http://ggplot2.org/) t
 - `to_titlecase()` - simple helper function to convert `"AnY stRanGELy forMaTTed STring"` to `"Title Case"`
 - `get_data_licence()` - get the url, or a markdown or html-formatted link to one of several B.C. or Canadian licences
 - `soft()` - use ENV SOFT utility from within R
+- `soe_path()` & `set_soe_root()` - set path to a folder or file in the ENV State of Evnvironment program network drive
 
 **Leaflet-related functions:**
 
