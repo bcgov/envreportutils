@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# envreportutils 0.8.0
+# envreportutils 0.9.0
 
 <a rel="Delivery" href="https://github.com/BCDevExchange/assets/blob/master/README.md"><img alt="In production, but maybe in Alpha or Beta. Intended to persist and be supported." style="border-width:0" src="https://assets.bcdevexchange.org/images/badges/delivery.svg" title="In production, but maybe in Alpha or Beta. Intended to persist and be supported." /></a>[![Travis-CI
 Build
@@ -26,8 +26,10 @@ products.
     Reporting BC graphs using facetting
   - `bgc_colours()` - get colour codes for B.C. Biogeoclimatic (BGC)
     Zones
-  - `svg_px()` - create svg for the web, specifying size in pixels
-  - `png_retina()` - create png for retina display
+  - `svg_px()` & `save_svg_px()`- create and save svg for the web,
+    specifying size in pixels
+  - `png_retina()` & `save_png_retina()` - create and save png for
+    retina display
 
 **Data wrangling & sharing functions:**
 
@@ -38,6 +40,8 @@ products.
   - `get_data_licence()` - get the url, or a markdown or html-formatted
     link to one of several B.C. or Canadian licences
   - `soft()` - use ENV SOFT utility from within R
+  - `soe_path()` & `set_soe_root()` - set path to a folder or file in
+    the ENV State of Evnvironment program network drive
 
 **Leaflet-related functions:**
 

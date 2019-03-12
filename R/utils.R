@@ -89,7 +89,7 @@ path relative to the SOE root folder (e.g. Operations ORCS/indicators/air/.")
 
 #' Set the path to the root of your SoE network folder
 #' 
-#' This well add an environment variable called `ENVREPORTUTILS_SOE_PATH` to 
+#' This will add an environment variable called `ENVREPORTUTILS_SOE_PATH` to 
 #' your `.Renviron` file and set it to the path on your computer to the 
 #' `pickaxe/SOE` folder.
 #'

@@ -1,7 +1,7 @@
 Package: envreportutils
 Type: Package
 Title: Utilities for common operations, mainly plotting
-Version: 0.8.0
+Version: 0.9.0
 Authors@R: c(person("Andy", "Teucher", role = c("aut", "cre"), email =
     "andy.teucher@gov.bc.ca"), 
     person("Stephanie", "Hazlitt", role = "aut", 
@@ -25,7 +25,9 @@ Imports:
     stringr (>= 1.3.1),
     rlang (>= 0.3.0.1),
     utils,
-    tools
+    tools,
+    grDevices,
+    graphics
 License: Apache License (== 2.0) | file LICENSE
 LazyData: true
 Suggests:
