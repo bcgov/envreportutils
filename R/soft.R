@@ -109,7 +109,7 @@ url_from_content <- function(x) {
   url
 }
 
-zip_it <- function(dir, zipname) {
+zip_it <- function(dir, zipname = NULL) {
   if (is.null(zipname)) {
     zipname <- paste0("soft_send_", Sys.Date(), ".zip")
   } else if (!grepl("\\.zip$", zipname)) {
