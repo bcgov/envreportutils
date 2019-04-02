@@ -19,13 +19,21 @@
 #' 
 #' The SOFT web form and more information can be found [here](http://www.env.gov.bc.ca/csd/imb/soft/).
 #'
-#' @param file Path to the file or directory on your computer. If `file` is a directory
-#'     the files in the directory will be zipped before they are uploaded.
+#' @param file Path to the file or directory on your computer. If `file` is a 
+#' directory or a character vector of filenames, the files in the directory will 
+#' be zipped before they are uploaded.
 #' @param email Optional email address to which to send the link to the file.
 #' @param email_subj Optional subject of the email.
-#' @param days The number of days the file should be available. Default 7.
-#' @param internal Should the link be only available with the B.C. Government network? Default `TRUE`
+#' @param days The number of days the file should be available. 
+#' Default 7, maximum 14.
+#' @param internal Should the link be only available with the B.C. Government 
+#' network? Default `TRUE`
 #' @param progress Should a progress bar be displayed? Default \code{TRUE}.
+#' @param zip Should the file be zipped before sending? Default \code{FALSE}, 
+#' however it \code{file} is a directory or multiple files they will be zipped 
+#' anyway.
+#' @param zipname an option name to call the zipfile. If left \code{NULL} (default), 
+#' a name will be generated.
 #'
 #' @importFrom httr POST stop_for_status content upload_file
 #' @importFrom xml2 xml_find_all xml_text
@@ -34,16 +42,16 @@
 #' @export
 #' @md
 soft <- function(file, email = NULL, email_subj = NULL, internal = TRUE, days = 7, 
-                 progress = TRUE) {
+                 progress = TRUE, zip = FALSE, zipname = NULL) {
   
-  if (!file.exists(file)) stop("file does not exist")
+  if (!all(file.exists(file))) stop("files do not exist")
   if (!is.logical(internal)) stop("'internal' must be TRUE or FALSE")
   if (!is.numeric(days)) stop("'days' must be a number")
   
   ## Zip it up if it is a directory
-  if (file.info(file)$isdir) {
+  if (file.info(file)$isdir || length(file) > 1 || zip) {
     message("Zipping files in directory: ", file)
-    zipfile <- zip_it(file)
+    zipfile <- zip_it(file, zipname)
     file <- zipfile
     on.exit(unlink(zipfile, recursive = TRUE))
   }
@@ -101,8 +109,13 @@ url_from_content <- function(x) {
   url
 }
 
-zip_it <- function(dir) {
-  zipname <- paste0("soft_send_", Sys.Date(), ".zip")
+zip_it <- function(dir, zipname) {
+  if (is.null(zipname)) {
+    zipname <- paste0("soft_send_", Sys.Date(), ".zip")
+  } else if (!grepl("\\.zip$", zipname)) {
+    zipname <- paste0(zipname, ".zip")
+  }
+  
   zipdir <- normalizePath(tempdir(), winslash = "/")
   zipfile <- file.path(zipdir, zipname, fsep = "/")
   utils::zip(zipfile = zipfile, files = dir, 
