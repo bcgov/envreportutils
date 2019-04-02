@@ -5,21 +5,31 @@
 \title{Post a file to SOFT for sharing}
 \usage{
 soft(file, email = NULL, email_subj = NULL, internal = TRUE,
-  days = 7, progress = TRUE)
+  days = 7, progress = TRUE, zip = FALSE, zipname = NULL)
 }
 \arguments{
-\item{file}{Path to the file or directory on your computer. If \code{file} is a directory
-the files in the directory will be zipped before they are uploaded.}
+\item{file}{Path to the file or directory on your computer. If \code{file} is a
+directory or a character vector of filenames, the files in the directory will
+be zipped before they are uploaded.}
 
 \item{email}{Optional email address to which to send the link to the file.}
 
 \item{email_subj}{Optional subject of the email.}
 
-\item{internal}{Should the link be only available with the B.C. Government network? Default \code{TRUE}}
+\item{internal}{Should the link be only available with the B.C. Government
+network? Default \code{TRUE}}
 
-\item{days}{The number of days the file should be available. Default 7.}
+\item{days}{The number of days the file should be available.
+Default 7, maximum 14.}
 
 \item{progress}{Should a progress bar be displayed? Default \code{TRUE}.}
+
+\item{zip}{Should the file be zipped before sending? Default \code{FALSE},
+however it \code{file} is a directory or multiple files they will be zipped
+anyway.}
+
+\item{zipname}{an option name to call the zipfile. If left \code{NULL} (default),
+a name will be generated.}
 }
 \value{
 A url of the link from which the file can be downloaded
