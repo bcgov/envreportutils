@@ -30,7 +30,7 @@
 #' report_percent(c(2.5, 11.324, 95.898, 99.6), round_90_to_one = TRUE)
 report_percent <- function(x, round_90_to_one = FALSE, as_char = TRUE) {
   
-  if (length(x) > 1 && range(x) <= 0.1) {
+  if (length(x) > 1 && diff(range(x)) <= 0.1) {
     y <- round(x, 2)
   } else {
     y <- ifelse(x < 10 | x >= 99.5 | round_90_to_one & x > 90, round(x, 1),
