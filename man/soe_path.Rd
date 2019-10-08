@@ -4,10 +4,11 @@
 \alias{soe_path}
 \title{Specify a path to a folder or file in the SOE folder on the network drive}
 \usage{
-soe_path(x)
+soe_path(...)
 }
 \arguments{
-\item{x}{character. Path to a file or folder, relative to `pickaxe/SOE`}
+\item{...}{path elements (character). Path to a file or folder, relative to `pickaxe/SOE`.
+Individual components will be combined with [file.path()]}
 }
 \value{
 full path to the file or folder

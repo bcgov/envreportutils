@@ -68,7 +68,8 @@ to_titlecase <- function(x) {
 
 #' Specify a path to a folder or file in the SOE folder on the network drive
 #'
-#' @param x character. Path to a file or folder, relative to `pickaxe/SOE`
+#' @param ... path elements (character). Path to a file or folder, relative to `pickaxe/SOE`.
+#'            Individual components will be combined with [file.path()]
 #'
 #' @return full path to the file or folder
 #' @export
@@ -79,11 +80,17 @@ to_titlecase <- function(x) {
 #' # In a function call:
 #' read.csv(soe_path("Operations ORCS/data/foo.csv"))
 #' }
-soe_path <- function(x) {
-  if (!is.character(x)) 
-  stop("x must be a character string denoting a 
+soe_path <- function(...) {
+  x <- list(...)
+  if (!all(vapply(x, is.character, FUN.VALUE = logical(1)))) {
+    stop("x must be a character string denoting a 
 path relative to the SOE root folder (e.g. Operations ORCS/indicators/air/.")
+  } 
+  x <- do.call(file.path, x)
   root <- get_soe_root()
+  if (!dir.exists(root)) {
+    stop(root, "Does not exist. Are you connected to the network?")
+  }
   file.path(root, gsub("^/", "", x))
 }
 
