@@ -1,3 +1,8 @@
+# envreportutils 0.9.0.9999
+* `soe_path()` can now accept individual path components, 
+  which are combined with `file.path()`
+* Fixed error in round_percent where range was used incorrectly.
+  
 # envreportutils 0.9.0
 * Added new functions `save_png_retina()` and `save_svg_px()`, wrapper functions around `png_retina()` & `svg_px()` analagous to `ggplot2::gsave()`
 * Added documentation in README for `set_path()` and `set_soe_root()` functions
