@@ -7,3 +7,4 @@ Makefile
 ^README\.Rmd$
 ^README-.*\.png$
 CODE_OF_CONDUCT.md
+^COMPLIANCE\.yaml$
