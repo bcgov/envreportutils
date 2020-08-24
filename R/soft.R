@@ -48,9 +48,11 @@ soft <- function(file, email = NULL, email_subj = NULL, internal = TRUE, days = 
   if (!is.logical(internal)) stop("'internal' must be TRUE or FALSE")
   if (!is.numeric(days)) stop("'days' must be a number")
   
+  nfiles <- length(file)
+  
   ## Zip it up if it is a directory
-  if (file.info(file)$isdir || length(file) > 1 || zip) {
-    message("Zipping files in directory: ", file)
+  if ((nfiles == 1L && file.info(file)$isdir) || nfiles > 1L || zip) {
+    message("Zipping ", nfiles, " file(s): ", paste0(file, collapse = ", "))
     zipfile <- zip_it(file, zipname)
     file <- zipfile
     on.exit(unlink(zipfile, recursive = TRUE))
