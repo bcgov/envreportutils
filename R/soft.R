@@ -48,6 +48,12 @@ soft <- function(file, email = NULL, email_subj = NULL, internal = TRUE, days = 
   if (!is.logical(internal)) stop("'internal' must be TRUE or FALSE")
   if (!is.numeric(days)) stop("'days' must be a number")
   
+  if (!internal && !inside_gov_network()) {
+    stop("You are not currently inside the government network;\n",
+         "files cannot be posted externally from outside the government network.", 
+         call. = FALSE)
+  }
+  
   nfiles <- length(file)
   
   ## Zip it up if it is a directory
@@ -99,6 +105,8 @@ soft <- function(file, email = NULL, email_subj = NULL, internal = TRUE, days = 
   
   if (internal) {
     message("It is only available inside the government network.\n")
+  } else {
+    message("It is available outside the government network.\n")
   }
   
   ret
@@ -123,5 +131,12 @@ zip_it <- function(dir, zipname = NULL) {
   utils::zip(zipfile = zipfile, files = dir, 
              flags = paste0(formals(utils::zip)$flags, " -q"))
   zipfile
+}
+
+inside_gov_network <- function() {
+  res <- httr::GET("http://www.env.gov.bc.ca/perl/soft/inside.pl")
+  httr::stop_for_status(res)
+  ret <- httr::content(res, as = "text", encoding = "UTF-8")
+  grepl("currently inside", ret)
 }
 
