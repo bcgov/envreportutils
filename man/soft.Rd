@@ -4,8 +4,16 @@
 \alias{soft}
 \title{Post a file to SOFT for sharing}
 \usage{
-soft(file, email = NULL, email_subj = NULL, internal = TRUE,
-  days = 7, progress = TRUE, zip = FALSE, zipname = NULL)
+soft(
+  file,
+  email = NULL,
+  email_subj = NULL,
+  internal = TRUE,
+  days = 7,
+  progress = TRUE,
+  zip = FALSE,
+  zipname = NULL
+)
 }
 \arguments{
 \item{file}{Path to the file or directory on your computer. If \code{file} is a

@@ -5,22 +5,42 @@
 \alias{save_png_retina}
 \title{Create png for retina display}
 \usage{
-png_retina(filename = "Rplot\%03d.png", width = 480, height = 480,
-  units = "px", pointsize = 12, bg = "white", res = NA, ...,
-  type = c("cairo", "cairo-png", "Xlib", "quartz"), antialias)
+png_retina(
+  filename = "Rplot\%03d.png",
+  width = 480,
+  height = 480,
+  units = "px",
+  pointsize = 12,
+  bg = "white",
+  res = NA,
+  ...,
+  type = c("cairo", "cairo-png", "Xlib", "quartz"),
+  antialias
+)
 
-save_png_retina(x, filename = "Rplot\%03d.png", width = 480,
-  height = 480, units = "px", pointsize = 12, bg = "white",
-  res = NA, ..., type = c("cairo", "cairo-png", "Xlib", "quartz"),
-  antialias)
+save_png_retina(
+  x,
+  filename = "Rplot\%03d.png",
+  width = 480,
+  height = 480,
+  units = "px",
+  pointsize = 12,
+  bg = "white",
+  res = NA,
+  ...,
+  type = c("cairo", "cairo-png", "Xlib", "quartz"),
+  antialias
+)
 }
 \arguments{
-\item{filename}{the name of the output file.
+\item{filename}{the output file path.
     The page number is substituted if a C integer format is included in
     the character string, as in the default.  (The result must be less
     than \code{PATH_MAX} characters long, and may be truncated if not.
-    See \code{\link{postscript}} for further details.)  Tilde expansion
-    is performed where supported by the platform.}
+    See \code{\link[grDevices]{postscript}} for further details.)  Tilde expansion
+    is performed where supported by the platform.  An input with
+    a marked encoding is converted to the native encoding on an error is
+    given.}
 
 \item{width}{the width of the device.}
 
@@ -41,12 +61,16 @@ save_png_retina(x, filename = "Rplot\%03d.png", width = 480,
     other than the default, and to convert points to pixels.}
 
 \item{...}{for \code{type = "Xlib"} only, additional arguments to
-    the underlying \code{\link{X11}} device such as \code{fonts} or
+    the underlying \code{\link[grDevices]{X11}} device such as \code{fonts} or
      \code{family}.
 
     For types \code{"cairo"} and \code{"quartz"}, the \code{family}
     argument can be supplied.  See the \sQuote{Cairo fonts}
-    section in the help for \code{\link{X11}}.}
+    section in the help for \code{\link[grDevices]{X11}}.
+    
+    For type \code{"cairo"}, the \code{symbolfamily}
+    argument can be supplied.  See \code{\link[grDevices]{X11.options}}.
+  }
 
 \item{type}{character string, one of \code{"Xlib"} or \code{"quartz"}
     (some macOS builds) or \code{"cairo"}.  The latter will only be
@@ -58,8 +82,8 @@ save_png_retina(x, filename = "Rplot\%03d.png", width = 480,
 
 \item{antialias}{for \code{type = "cairo"}, giving the type of
     anti-aliasing (if any) to be used for fonts and lines (but not
-    fills). See \code{\link{X11}}.  The default is set by
-    \code{\link{X11.options}}.  Also for \code{type = "quartz"}, where
+    fills). See \code{\link[grDevices]{X11}}.  The default is set by
+    \code{\link[grDevices]{X11.options}}.  Also for \code{type = "quartz"}, where
     antialiasing is used unless \code{antialias = "none"}.}
 
 \item{x}{a ggplot2 object}

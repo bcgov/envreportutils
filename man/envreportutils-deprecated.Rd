@@ -41,7 +41,7 @@ These functions are no longer available in this package.
 All of these functions, except roxygen_template, are available in the bcgovr
 package available on GitHub here: https://github.com/bcgov/bcgovr
 
-\itemize{
+ \itemize{
  \item \code{\link{roxygen_template}}: This function is defunct.
   \item \code{\link{devex_badge}}: This function is defunct.
    \item \code{\link{analysis_skeleton}}: This function is defunct.

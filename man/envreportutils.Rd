@@ -3,7 +3,6 @@
 \docType{package}
 \name{envreportutils}
 \alias{envreportutils}
-\alias{envreportutils-package}
 \title{envreportutils}
 \description{
 A package with ggplot2 themes and other functions commonly used by the Environmental Reporting BC

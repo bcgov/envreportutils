@@ -5,8 +5,10 @@
 \alias{get_data_license}
 \title{Returns a url, or a markdown-formatted or html-formatted link to one of several B.C. or Canadian licences}
 \usage{
-get_data_licence(licence = c("ogl-bc", "bc-crown", "ogl-canada",
-  "statscan"), what = "md_link")
+get_data_licence(
+  licence = c("ogl-bc", "bc-crown", "ogl-canada", "statscan"),
+  what = "md_link"
+)
 }
 \arguments{
 \item{licence}{Which licence? One of:

@@ -5,13 +5,30 @@
 \alias{save_svg_px}
 \title{Create svg for the web, specifying size in pixels}
 \usage{
-svg_px(file = "Rplots.svg", width = 800, height = 800, res = 72,
-  bg = "white", pointsize = 12, standalone = TRUE,
-  system_fonts = list(), user_fonts = list())
+svg_px(
+  file = "Rplots.svg",
+  width = 800,
+  height = 800,
+  res = 72,
+  bg = "white",
+  pointsize = 12,
+  standalone = TRUE,
+  system_fonts = list(),
+  user_fonts = list()
+)
 
-save_svg_px(x, file = "Rplots.svg", width = 800, height = 800,
-  res = 72, bg = "white", pointsize = 12, standalone = TRUE,
-  system_fonts = list(), user_fonts = list())
+save_svg_px(
+  x,
+  file = "Rplots.svg",
+  width = 800,
+  height = 800,
+  res = 72,
+  bg = "white",
+  pointsize = 12,
+  standalone = TRUE,
+  system_fonts = list(),
+  user_fonts = list()
+)
 }
 \arguments{
 \item{file}{The file where output will appear.}

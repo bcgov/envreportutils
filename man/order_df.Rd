@@ -6,8 +6,15 @@
 function stills work but will be removed (defunct) in the next version of the package.
 You can use forcats::fct_reorder for the same functionality.}
 \usage{
-order_df(df, target_col, value_col = NULL, fun = NULL, ...,
-  desc = FALSE, factor_order = NULL)
+order_df(
+  df,
+  target_col,
+  value_col = NULL,
+  fun = NULL,
+  ...,
+  desc = FALSE,
+  factor_order = NULL
+)
 }
 \arguments{
 \item{df}{The data frame to sort.}
