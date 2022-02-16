@@ -135,9 +135,9 @@ popup_caaqs <- function(data, type = "station", metric_name, units, standard_nam
   data <- dplyr::mutate(data, 
                         popup_row1 = popup_create_row(.data$title),
                         popup_row2 = popup_create_row(.data$info_metric, .data$info_standard),
-                        popup_row3 = paste0("<img src = ", 
+                        popup_row3 = paste0("<img src = '", 
                                             paste0("./station_plots/", .data$p_station_id, 
-                                                   ".svg"), 
+                                                   ".svg'"), 
                                       ">"))
   
   
