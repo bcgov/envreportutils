@@ -137,7 +137,7 @@ popup_caaqs <- function(data, type = "station", metric_name, units, standard_nam
                         popup_row2 = popup_create_row(.data$info_metric, .data$info_standard),
                         popup_row3 = paste0("<img src = ", 
                                             paste0("./station_plots/", .data$p_station_id, 
-                                                   "_lineplot.svg"), 
+                                                   ".svg"), 
                                       ">"))
   
   
