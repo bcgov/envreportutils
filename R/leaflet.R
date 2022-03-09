@@ -254,7 +254,7 @@ popup_caaqs_metric <- function(data, metric_name, units, metric = NULL, type = "
 
 popup_caaqs_standard <- function(data, standard_name, type = "right") {
 
-  class <- paste0("section-metric section-metric-", type)
+  class <- paste0("section-standard section-standard-", type)
   
   data %>%
     dplyr::mutate(

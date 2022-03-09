@@ -311,12 +311,14 @@ html.lt-ie9 .blur-overlay {
   font-size: 14px;
 }
 
-.popup-row .section-metric .section-metric-left {
+.popup-row .section-metric-left {
   float: left;
+  margin-left: 14.5%;
 }
 
-.popup-row .section-metric .section-metric-right {
+.popup-row .section-metric-right {
   float: right;
+  margin-right: 14.5%;
 }
 
 
@@ -332,10 +334,6 @@ html.lt-ie9 .blur-overlay {
 
 .leaflet-popup-content img {
   margin-bottom: 1em;
-}
-
-.popup-row .section-metric:first-child {
-	margin-left: 14.5%;
 }
 
 .popup-row .section-metric h3 {
