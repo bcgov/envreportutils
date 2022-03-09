@@ -274,16 +274,24 @@ html.lt-ie9 .blur-overlay {
 }
 
 .popup-row .section-standard {
-	margin-left: 8%;
 	width: 32%;
 	padding: 1em 0;
-	float: left;
 	background-color: #efefef;
 	min-height: 76px;
 	color: #fff;
 	-webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
+}
+
+.popup-row .section-standard-right {
+  margin-left: 8%;
+  float: left;
+}
+
+.popup-row .section-standard-center {
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .popup-row span {
@@ -294,7 +302,6 @@ html.lt-ie9 .blur-overlay {
 .popup-row .section-metric {
 	width: 32%;
 	overflow: auto;
-	float: left;
 	padding: 1em 0;
 	background-color: #efefef;
 	min-height: 76px;
@@ -303,6 +310,15 @@ html.lt-ie9 .blur-overlay {
   box-sizing: content-box;
   font-size: 14px;
 }
+
+.popup-row .section-metric .section-metric-left {
+  float: left;
+}
+
+.popup-row .section-metric .section-metric-right {
+  float: right;
+}
+
 
 .popup-row .scale {
 	overflow: auto;
