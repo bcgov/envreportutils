@@ -189,15 +189,20 @@ popup_caaqs_combo <- function(data, type = "station", metric_type, metrics,
   data <- popup_caaqs_metric(data, metric_names[2], units, metric = metrics[2],
                              type = "right")
   
-  data <- dplyr::mutate(data, 
-                        popup_row1 = popup_create_row(.data$title),
-                        popup_row2 = popup_create_row(.data$info_standard),
-                        popup_row3 = popup_create_row(.data$info_metric1,
-                                                      .data$info_metric2),
-                        popup_row4 = paste0("<img src = '", 
-                                            paste0("./station_plots/", .data$p_station_id, 
-                                                   ".svg'"), 
-                                            ">"))
+  data <- dplyr::mutate(
+    data, 
+    popup_row1 = popup_create_row(.data$title),
+    popup_row2 = popup_create_row(.data$info_standard),
+    popup_row3 = popup_create_row(.data$info_metric1,
+                                  .data$info_metric2),
+    popup_row4 = paste0("<img src = '", 
+                        paste0("./station_plots/", .data$p_station_id, 
+                               "_", metrics[1], ".svg'"), 
+                        ">"),
+    popup_row5 = paste0("<img src = '", 
+                        paste0("./station_plots/", .data$p_station_id, 
+                               "_", metrics[2], ".svg'"), 
+                        ">"))
   
   popup_combine_rows(data)
 }
