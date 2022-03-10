@@ -241,6 +241,8 @@ html.lt-ie9 .blur-overlay {
 	text-align: center;
 	width: 95% !important;
 	margin: 1.25em auto 0;
+	overflow: auto;
+	max-height: 450px;
 }
 
 .popup-row {
