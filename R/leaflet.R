@@ -213,11 +213,11 @@ popup_caaqs_combo <- function(data, type = "station",
     popup_row3 = popup_create_row(.data$info_metric1,
                                   .data$info_metric2),
     popup_row4 = popup_create_row(paste0("<img src = '", 
-                        paste0("./station_plots/", .data[["station_id"]], 
+                        paste0("./station_plots/", .data[[station_id]], 
                                "_", metrics[1], ".svg'"), 
                         ">")),
     popup_row5 = popup_create_row(paste0("<img src = '", 
-                        paste0("./station_plots/", .data[["station_id"]], 
+                        paste0("./station_plots/", .data[[station_id]], 
                                "_", metrics[2], ".svg'"), 
                         ">")))
   
@@ -230,12 +230,12 @@ popup_caaqs_combo <- function(data, type = "station",
 popup_caaqs_title <- function(data, type, airzone, station_name) {
   if(type == "region") {
     data <- dplyr::mutate(data, title = paste0(
-      "    <h2>Air Zone: ", .data[["airzone"]], "</h2>\n",
-      "    <h4>Station: ", .data[["station_name"]], "</h4>\n"))
+      "    <h2>Air Zone: ", .data[[airzone]], "</h2>\n",
+      "    <h4>Station: ", .data[[station_name]], "</h4>\n"))
   } else if(type == "station") {
     data <- dplyr::mutate(data, title = paste0(
-      "    <h2>Station: ", .data[["station_name"]], "</h2>\n",
-      "    <h4>Air Zone: ", .data[["airzone"]], "</h4>\n"))
+      "    <h2>Station: ", .data[[station_name]], "</h2>\n",
+      "    <h4>Air Zone: ", .data[[airzone]], "</h4>\n"))
   }
   dplyr::mutate(data, 
                 title = paste0(
@@ -250,15 +250,15 @@ popup_caaqs_metric <- function(data, metric_name, units,
   
   data %>%
     dplyr::mutate(
-      info_metric = dplyr::if_else(is.na(.data[["value"]]),
+      info_metric = dplyr::if_else(is.na(.data[[value]]),
                                    "Insufficient Data", 
-                                   paste(.data[["value"]], units)),
+                                   paste(.data[[value]], units)),
       info_metric = paste0("    <h4>", metric_name, "</h4>\n",
                            "    <h3>", .data$info_metric, "</h3>\n"),
-      info_metric = dplyr::if_else(is.na(.data[["value"]]),
+      info_metric = dplyr::if_else(is.na(.data[[value]]),
                                    .data$info_metric,
                                    paste0(.data$info_metric, 
-                                          "    <span>(", .data[["n_years"]], 
+                                          "    <span>(", .data[[n_years]], 
                                           " year average)</span>\n")),
       info_metric = paste0("  <div class = '", class, "'>\n", 
                            .data$info_metric, "  </div>\n")) %>%
@@ -273,10 +273,10 @@ popup_caaqs_standard <- function(data, standard_name, level, colour,
   data %>%
     dplyr::mutate(
       info_standard = paste0("    <h4>", standard_name, "</h4>\n",
-                             "    <h2>", .data[["level"]], "</h2>\n"),
+                             "    <h2>", .data[[level]], "</h2>\n"),
       info_standard = paste0("  <div class = '", class, "' ",
                              "style = 'background-color: ", 
-                             .data[["colour"]], "'>\n",
+                             .data[[colour]], "'>\n",
                              .data$info_standard, "  </div>\n"))
 }
 
