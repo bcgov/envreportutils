@@ -97,8 +97,13 @@ popup_combine_rows <- function(data) {
   if(length(cols) == 1) return(data[, cols])
   
   cols <- as.list(data[, cols])
-  data <- dplyr::mutate(data,
-                        popup = purrr::pmap(cols, ~htmltools::HTML(paste0(...))))
+  data <- dplyr::mutate(
+    data,
+    popup = purrr::pmap(cols, ~htmltools::HTML(paste0(...))),
+    popup = purrr::map(
+      popup, 
+      ~htmltools::div(., class='leaflet-popup-scrolled',
+                      style='max-width:600px; max-height:600px')))
   data$popup
 }
 
@@ -106,41 +111,48 @@ popup_combine_rows <- function(data) {
 #'
 #' @param data Data Frame. CAAQ information
 #' @param type Character. Which type of popup? "station" or "region"?
-#' @param metric_name Character. Display name of the CAAQ metric in HTML code
-#'   (e.g., "Ozone Metric", or "PM<sub>2.5</sub> Metric (annual)").
-#' @param units Character. Metric units in HTML code (e.g., "ppm" or
-#'   "&mu;g/m&sup3;")
-#' @param standard_name Character. Display name of the CAAQ standard in HTML
-#'   code (e.g., "Ozone Air Quality Standard" or "PM<sub>2.5</sub> Air Quality
-#'   Standard (annual)")
-#'   
-#' @details Data frame must contain the following columns: 'p_az' reflecting the
-#'   airzone name, 'p_station_id' reflecting the station id, 'p_station'
-#'   reflecting the station name, 'metric_value_ambient' reflecting the CAAQS metric
-#'   value, 'caaqs_ambient' reflecting the CAAQS status (not in HTML code), and
-#'   'n_years' reflecting the number of years the CAAQS metric is averaged over.
+#' @param metric_type Character Display name of the CAAQ metric in HTML code
+#'   (e.g., `"Ozone"`).
+#' @param units Character. Metric units in HTML code (e.g., "ppm"")
+#' @param airzone Character. Column name of the airzone column.
+#' @param n_years Character. Column name of the number of years (e.g., 'n_years')
+#' @param station_name Character. Column name of the station name.
+#' @param station_id Character. Column name of the station id (can be the same
+#'   as station name).
+#' @param value Character. Column name of the metric value (e.g.,
+#'   'metric_value_ambient').
+#' @param level Character. Column name of the CAAQS level (e.g., 'caaqs_ambient').
+#' @param colour Character. Column name of the colour for the CAAQS status box
+#'   (should correspond to each 'level')
 #'
 #' @return Character vector of the HTML code for the popup to be passed to
 #'   leaflet
 #'
 #' @export
 
-popup_caaqs <- function(data, type = "station", metric_name, units, standard_name) {
+popup_caaqs <- function(data, type = "station", metric_type, units, 
+                        airzon = "airzone", n_years = "n_years",
+                        station_name, station_id, value, level, 
+                        colour = "colour") {
+  
   if("sf" %in% class(data)) data <- as.data.frame(data)
   
+  metric_names <- paste0(metric_type, " Metric")
+  standard_name <- paste(metric_type, "Air Quality Standard")
+  
   # Define individual elements
-  data <- popup_caaqs_title(data, type)
-  data <- popup_caaqs_metric(data, metric_name, units)
-  data <- popup_caaqs_standard(data, standard_name)
-  data <- dplyr::mutate(data, 
-                        popup_row1 = popup_create_row(.data$title),
-                        popup_row2 = popup_create_row(.data$info_metric, .data$info_standard),
-                        popup_row3 = paste0("<img src = '", 
-                                            paste0("./station_plots/", .data$p_station_id, 
-                                                   ".svg'"), 
-                                      ">"))
+  data <- popup_caaqs_title(data, type, airzone, station_name)
+  data <- popup_caaqs_metric(data, metric_names, units, value, n_years)
+  data <- popup_caaqs_standard(data, standard_name, level, colour)
   
-  
+  data <- dplyr::mutate(
+    data, 
+    popup_row1 = popup_create_row(.data$title),
+    popup_row2 = popup_create_row(.data$info_metric, .data$info_standard),
+    popup_row3 = paste0("<img src = '", 
+                        paste0("./station_plots/", .data$p_station_id, 
+                               ".svg'"), 
+                        ">"))
   popup_combine_rows(data)
 }
 
@@ -158,36 +170,41 @@ popup_caaqs <- function(data, type = "station", metric_name, units, standard_nam
 #'   "24hr"))
 #' @param units Character. Metric units in HTML code (e.g., "ppm" or
 #'   "&mu;g/m&sup3;")
-#'   
-#' @details Data frame must contain the following columns: 'p_az' reflecting the
-#'   airzone name, 'p_station_id' reflecting the station id, 'p_station'
-#'   reflecting the station name, 'colour' reflecting the background colour for
-#'   the CAAQS achievement box, 'metric_value_ambient' reflecting the CAAQS
-#'   metric value, 'caaqs_ambient' reflecting the CAAQS status (not in HTML
-#'   code), and 'n_years' reflecting the number of years the CAAQS metric is
-#'   averaged over.
+#' @param airzone Character. Column name of the airzone column.
+#' @param n_years Character. Column name of the number of years (e.g., 'n_years')
+#' @param station_name Character. Column name of the station name.
+#' @param station_id Character. Column name of the station id (can be the same
+#'   as station name).
+#' @param value1 Character. Column name of the first metric value (e.g.,
+#'   'metric_value_ambient_annual').
+#' @param value2 Character. Column name of the second metric value (e.g.,
+#'   'metric_value_ambient_24h').
+#' @param level Character. Column name of the CAAQS level (e.g., 'caaqs_ambient').
+#' @param colour Character. Column name of the colour for hte CAAQS status box
+#'   (should correspond to each 'level')
 #'
 #' @return Character vector of the HTML code for the popup to be passed to
 #'   leaflet
 #'
 #' @export
 
-popup_caaqs_combo <- function(data, type = "station", metric_type, metrics,
-                              units) {
+popup_caaqs_combo <- function(data, type = "station", 
+                              metric_type, metrics, units, 
+                              airzone = "airzone", n_years = "n_years", 
+                              station_name, station_id, value1, value2, 
+                              level, colour = "colour") {
   if("sf" %in% class(data)) data <- as.data.frame(data)
   
   metric_names <- paste0(metric_type, " Metric (", metrics, ")")
   standard_name <- paste(metric_type, "Air Quality Standard")
-  n_years <- paste0("metric_", metrics, "_n_years")
   
   # Define individual elements
-  data <- popup_caaqs_title(data, type)
-  data <- popup_caaqs_standard(data, standard_name, type = "center")
-  
-  data <- popup_caaqs_metric(data, metric_names[1], units, metric = metrics[1], 
-                             type = "left")
-  data <- popup_caaqs_metric(data, metric_names[2], units, metric = metrics[2],
-                             type = "right")
+  data <- popup_caaqs_title(data, type, airzone, station_name)
+  data <- popup_caaqs_standard(data, standard_name, level, colour, type = "center")
+  data <- popup_caaqs_metric(data, metric_names[1], units, 
+                             type = "left", value = value1, n_years)
+  data <- popup_caaqs_metric(data, metric_names[2], units, 
+                             type = "right", value = value2, n_years)
   
   data <- dplyr::mutate(
     data, 
@@ -195,14 +212,14 @@ popup_caaqs_combo <- function(data, type = "station", metric_type, metrics,
     popup_row2 = popup_create_row(.data$info_standard),
     popup_row3 = popup_create_row(.data$info_metric1,
                                   .data$info_metric2),
-    popup_row4 = paste0("<img src = '", 
-                        paste0("./station_plots/", .data$p_station_id, 
+    popup_row4 = popup_create_row(paste0("<img src = '", 
+                        paste0("./station_plots/", .data[["station_id"]], 
                                "_", metrics[1], ".svg'"), 
-                        ">"),
-    popup_row5 = paste0("<img src = '", 
-                        paste0("./station_plots/", .data$p_station_id, 
+                        ">")),
+    popup_row5 = popup_create_row(paste0("<img src = '", 
+                        paste0("./station_plots/", .data[["station_id"]], 
                                "_", metrics[2], ".svg'"), 
-                        ">"))
+                        ">")))
   
   popup_combine_rows(data)
 }
@@ -210,59 +227,56 @@ popup_caaqs_combo <- function(data, type = "station", metric_type, metrics,
 
 
 
-popup_caaqs_title <- function(data, type) {
+popup_caaqs_title <- function(data, type, airzone, station_name) {
   if(type == "region") {
-    data <- dplyr::mutate(data, title = paste0("    <h2>Air Zone: ", .data$p_az, "</h2>\n",
-                                               "    <h4>Station: ", .data$p_station, "</h4>\n"))
+    data <- dplyr::mutate(data, title = paste0(
+      "    <h2>Air Zone: ", .data[["airzone"]], "</h2>\n",
+      "    <h4>Station: ", .data[["station_name"]], "</h4>\n"))
   } else if(type == "station") {
-    data <- dplyr::mutate(data, title = paste0("    <h2>Station: ", .data$p_station, "</h2>\n",
-                                               "    <h4>Air Zone: ", .data$p_az, "</h4>\n"))
+    data <- dplyr::mutate(data, title = paste0(
+      "    <h2>Station: ", .data[["station_name"]], "</h2>\n",
+      "    <h4>Air Zone: ", .data[["airzone"]], "</h4>\n"))
   }
   dplyr::mutate(data, 
-                title = paste0("  <div class = 'title'>\n", .data$title, "  </div>\n"))
+                title = paste0(
+                  "  <div class = 'title'>\n", .data$title, "  </div>\n"))
 }
 
-popup_caaqs_metric <- function(data, metric_name, units, metric = NULL, type = "left") {
+popup_caaqs_metric <- function(data, metric_name, units, 
+                               type = "left", value, n_years) {
 
   class <- paste0("section-metric section-metric-", type)
   n <- length(stringr::str_subset(names(data), "info_metric")) + 1
   
-  if(!is.null(metric)) {
-    n_years <- paste0("metric_", metric, "_n_years")
-    metric_val <- paste0("metric_", metric)
-  } else {
-    n_years <- "n_years"
-    metric_val <- "caaqs_ambient"
-  }
-  
   data %>%
     dplyr::mutate(
-      info_metric = dplyr::if_else(is.na(.data[[metric_val]]),
+      info_metric = dplyr::if_else(is.na(.data[["value"]]),
                                    "Insufficient Data", 
-                                   paste(.data[[metric_val]], units)),
+                                   paste(.data[["value"]], units)),
       info_metric = paste0("    <h4>", metric_name, "</h4>\n",
                            "    <h3>", .data$info_metric, "</h3>\n"),
-      info_metric = dplyr::if_else(is.na(.data[[metric_val]]),
+      info_metric = dplyr::if_else(is.na(.data[["value"]]),
                                    .data$info_metric,
                                    paste0(.data$info_metric, 
-                                          "    <span>(", .data[[n_years]], 
+                                          "    <span>(", .data[["n_years"]], 
                                           " year average)</span>\n")),
       info_metric = paste0("  <div class = '", class, "'>\n", 
                            .data$info_metric, "  </div>\n")) %>%
     dplyr::rename_with(.cols = "info_metric", ~ paste0(., n))
 }
 
-popup_caaqs_standard <- function(data, standard_name, type = "right") {
+popup_caaqs_standard <- function(data, standard_name, level, colour, 
+                                 type = "right") {
 
   class <- paste0("section-standard section-standard-", type)
   
   data %>%
     dplyr::mutate(
       info_standard = paste0("    <h4>", standard_name, "</h4>\n",
-                             "    <h2>", .data$caaqs_ambient, "</h2>\n"),
+                             "    <h2>", .data[["level"]], "</h2>\n"),
       info_standard = paste0("  <div class = '", class, "' ",
                              "style = 'background-color: ", 
-                             .data$colour, "'>\n",
+                             .data[["colour"]], "'>\n",
                              .data$info_standard, "  </div>\n"))
 }
 
