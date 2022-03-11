@@ -120,6 +120,8 @@ popup_combine_rows <- function(data) {
 #' @param level Character. Column name of the CAAQS level (e.g., 'caaqs_ambient').
 #' @param colour Character. Column name of the colour for the CAAQS status box
 #'   (should correspond to each 'level')
+#' @param text_colour Character. Column name of the text colour for the CAAQS
+#'   status box (should correspond to each 'level')
 #'
 #' @return Character vector of the HTML code for the popup to be passed to
 #'   leaflet
@@ -129,7 +131,7 @@ popup_combine_rows <- function(data) {
 popup_caaqs <- function(data, type = "station", metric_type, units, 
                         airzon = "airzone", n_years = "n_years",
                         station_name, station_id, value, level, 
-                        colour = "colour") {
+                        colour = "colour", text_colour = "text_colour") {
   
   if("sf" %in% class(data)) data <- as.data.frame(data)
   
@@ -139,7 +141,7 @@ popup_caaqs <- function(data, type = "station", metric_type, units,
   # Define individual elements
   data <- popup_caaqs_title(data, type, airzone, station_name)
   data <- popup_caaqs_metric(data, metric_names, units, value, n_years)
-  data <- popup_caaqs_standard(data, standard_name, level, colour)
+  data <- popup_caaqs_standard(data, standard_name, level, colour, text_colour)
   
   data <- dplyr::mutate(
     data, 
@@ -178,7 +180,9 @@ popup_caaqs <- function(data, type = "station", metric_type, units,
 #' @param level Character. Column name of the CAAQS level (e.g., 'caaqs_ambient').
 #' @param colour Character. Column name of the colour for hte CAAQS status box
 #'   (should correspond to each 'level')
-#'
+#' @param text_colour Character. Column name of the text colour for the CAAQS
+#'   status box (should correspond to each 'level')
+#'   
 #' @return Character vector of the HTML code for the popup to be passed to
 #'   leaflet
 #'
@@ -188,7 +192,8 @@ popup_caaqs_combo <- function(data, type = "station",
                               metric_type, metrics, units, 
                               airzone = "airzone", n_years = "n_years", 
                               station_name, station_id, value1, value2, 
-                              level, colour = "colour") {
+                              level, colour = "colour",
+                              text_colour = "text_colour") {
   if("sf" %in% class(data)) data <- as.data.frame(data)
   
   metric_names <- paste0(metric_type, " Metric (", metrics, ")")
@@ -196,7 +201,8 @@ popup_caaqs_combo <- function(data, type = "station",
   
   # Define individual elements
   data <- popup_caaqs_title(data, type, airzone, station_name)
-  data <- popup_caaqs_standard(data, standard_name, level, colour, type = "center")
+  data <- popup_caaqs_standard(data, standard_name, level, colour, text_colour, 
+                               type = "center")
   data <- popup_caaqs_metric(data, metric_names[1], units, 
                              type = "left", value = value1, n_years)
   data <- popup_caaqs_metric(data, metric_names[2], units, 
@@ -262,7 +268,7 @@ popup_caaqs_metric <- function(data, metric_name, units,
 }
 
 popup_caaqs_standard <- function(data, standard_name, level, colour, 
-                                 type = "right") {
+                                 text_colour, type = "right") {
 
   class <- paste0("section-standard section-standard-", type)
   
@@ -270,9 +276,9 @@ popup_caaqs_standard <- function(data, standard_name, level, colour,
     dplyr::mutate(
       info_standard = paste0("    <h4>", standard_name, "</h4>\n",
                              "    <h2>", .data[[level]], "</h2>\n"),
-      info_standard = paste0("  <div class = '", class, "' ",
-                             "style = 'background-color: ", 
-                             .data[[colour]], "'>\n",
+      info_standard = paste0("  <div class = '", class, "' style = '",
+                             "background-color: ", .data[[colour]], "; ", 
+                             "color: ", .data[[text_colour]], "'>\n",
                              .data$info_standard, "  </div>\n"))
 }
 

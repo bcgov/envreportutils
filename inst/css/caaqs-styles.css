@@ -276,7 +276,6 @@ html.lt-ie9 .blur-overlay {
 }
 
 .popup-row .section-standard {
-	width: 32%;
 	padding: 1em 0;
 	background-color: #efefef;
 	min-height: 76px;
@@ -287,11 +286,13 @@ html.lt-ie9 .blur-overlay {
 }
 
 .popup-row .section-standard-right {
+  width: 32%;
   margin-left: 8%;
   float: left;
 }
 
 .popup-row .section-standard-center {
+	width: 50%;
 	margin-left: auto;
 	margin-right: auto;
 }
