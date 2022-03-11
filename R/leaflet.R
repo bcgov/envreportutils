@@ -192,38 +192,57 @@ popup_caaqs_combo <- function(data, type = "station",
                               metric_type, metrics, units, 
                               airzone = "airzone", n_years = "n_years", 
                               station_name, station_id, value1, value2, 
-                              level, colour = "colour",
-                              text_colour = "text_colour") {
+                              level1, level2 = NULL, 
+                              colour1 = "colour2", colour2 = "colour2",
+                              text_colour1 = "text_colour1", 
+                              text_colour2 = "text_colour2") {
   if("sf" %in% class(data)) data <- as.data.frame(data)
   
   metric_names <- paste0(metric_type, " Metric (", metrics, ")")
-  standard_name <- paste(metric_type, "Air Quality Standard")
+  if(type == "station") {
+    standard_name <- paste(metric_type, "Air Quality Management Actions")
+  } else if(type == "airzone") {
+    standard_name <- paste(metric_type, "Air Quality Standard") 
+  }
   
   # Define individual elements
   data <- popup_caaqs_title(data, type, airzone, station_name)
-  data <- popup_caaqs_standard(data, standard_name, level, colour, text_colour, 
-                               type = "center")
+  data <- dplyr::mutate(data, popup_row1 = popup_create_row(.data$title))
+  
+  # If Achievement depends on tfees, show both
+  if(!is.null(level2) && level1 != level2) {
+    data <- popup_caaqs_standard(data, standard_name, level1,
+                                 colour1, text_colour1, type = "left")
+    data <- popup_caaqs_standard(data, standard_name, level2,
+                                 colour2, text_colour2, type = "right")
+    data <- dplyr::mutate(data, 
+                          popup_row2 = popup_create_row(.data$info_standard1,
+                                                        .data$info_standard2))
+  } else {
+    data <- popup_caaqs_standard(data, standard_name, level1,
+                                 colour1, text_colour1, type = "center")
+    data <- dplyr::mutate(data, popup_row2 = popup_create_row(.data$info_standard1))
+  }
+  
   data <- popup_caaqs_metric(data, metric_names[1], units, 
                              type = "left", value = value1, n_years)
   data <- popup_caaqs_metric(data, metric_names[2], units, 
                              type = "right", value = value2, n_years)
   
-  data <- dplyr::mutate(
-    data, 
-    popup_row1 = popup_create_row(.data$title),
-    popup_row2 = popup_create_row(.data$info_standard),
-    popup_row3 = popup_create_row(.data$info_metric1,
-                                  .data$info_metric2),
-    popup_row4 = popup_create_row(paste0("<img src = '", 
-                        paste0("./station_plots/", .data[[station_id]], 
-                               "_", metrics[1], ".svg'"), 
-                        ">")),
-    popup_row5 = popup_create_row(paste0("<img src = '", 
-                        paste0("./station_plots/", .data[[station_id]], 
-                               "_", metrics[2], ".svg'"), 
-                        ">")))
-  
-  popup_combine_rows(data)
+  data %>%
+    dplyr::mutate(
+      popup_row3 = popup_create_row(.data$info_metric1,
+                                    .data$info_metric2),
+      popup_row4 = popup_create_row(
+        paste0("<img src = '", paste0("./station_plots/", .data[[station_id]], 
+                                      "_", metrics[1], ".svg'"), 
+               ">")),
+      popup_row5 = popup_create_row(
+        paste0("<img src = '", 
+               paste0("./station_plots/", .data[[station_id]], 
+                      "_", metrics[2], ".svg'"), 
+               ">"))) %>%
+    popup_combine_rows()
 }
 
 
@@ -271,6 +290,7 @@ popup_caaqs_standard <- function(data, standard_name, level, colour,
                                  text_colour, type = "right") {
 
   class <- paste0("section-standard section-standard-", type)
+  n <- length(stringr::str_subset(names(data), "info_standard")) + 1
   
   data %>%
     dplyr::mutate(
@@ -279,7 +299,8 @@ popup_caaqs_standard <- function(data, standard_name, level, colour,
       info_standard = paste0("  <div class = '", class, "' style = '",
                              "background-color: ", .data[[colour]], "; ", 
                              "color: ", .data[[text_colour]], "'>\n",
-                             .data$info_standard, "  </div>\n"))
+                             .data$info_standard, "  </div>\n")) %>%
+    dplyr::rename_with(.cols = "info_standard", ~ paste0(., n))
 }
 
 

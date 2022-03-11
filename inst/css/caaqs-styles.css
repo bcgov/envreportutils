@@ -251,7 +251,6 @@ html.lt-ie9 .blur-overlay {
 
 .popup-row + .popup-row {
 	border-top: 1px solid #CCC;
-	margin-top: 1em;
 	padding: 1em 0;
 }
 
@@ -289,6 +288,12 @@ html.lt-ie9 .blur-overlay {
   width: 32%;
   margin-left: 8%;
   float: left;
+}
+
+.popup-row .section-standard-right {
+  width: 32%;
+  margin-right: 8%;
+  float: right;
 }
 
 .popup-row .section-standard-center {
