@@ -99,11 +99,7 @@ popup_combine_rows <- function(data) {
   cols <- as.list(data[, cols])
   data <- dplyr::mutate(
     data,
-    popup = purrr::pmap(cols, ~htmltools::HTML(paste0(...))),
-    popup = purrr::map(
-      popup, 
-      ~htmltools::div(., class='leaflet-popup-scrolled',
-                      style='max-width:600px; max-height:600px')))
+    popup = purrr::pmap(cols, ~htmltools::HTML(paste0(...))))
   data$popup
 }
 
