@@ -2,36 +2,70 @@
 % Please edit documentation in R/leaflet.R
 \name{popup_caaqs}
 \alias{popup_caaqs}
-\title{Create popup for CAAQS indicators}
+\title{Create popup for combination CAAQS indicators}
 \usage{
-popup_caaqs(data, type = "station", metric_name, units, standard_name)
+popup_caaqs(
+  data,
+  type = "station",
+  metric_type,
+  metrics,
+  units,
+  airzone = "airzone",
+  n_years = "n_years",
+  station_name,
+  station_id,
+  value1,
+  value2,
+  level1,
+  level2 = NULL,
+  colour1 = "colour",
+  colour2 = "colour2",
+  text_colour1 = "text_colour",
+  text_colour2 = "text_colour2"
+)
 }
 \arguments{
 \item{data}{Data Frame. CAAQ information}
 
-\item{type}{Character. Which type of popup? "station" or "region"?}
+\item{type}{Character. Which type of popup? "station" or "airzone"?}
 
-\item{metric_name}{Character. Display name of the CAAQ metric in HTML code
-(e.g., "Ozone Metric", or "PM<sub>2.5</sub> Metric (annual)").}
+\item{metric_type}{Character Display name of the CAAQ metric in HTML code
+(e.g., `"PM<sub>2.5</sub>"`).}
+
+\item{metrics}{Character vector. Metrics to combine (e.g., c("annual",
+"24hr"))}
 
 \item{units}{Character. Metric units in HTML code (e.g., "ppm" or
 "&mu;g/m&sup3;")}
 
-\item{standard_name}{Character. Display name of the CAAQ standard in HTML
-code (e.g., "Ozone Air Quality Standard" or "PM<sub>2.5</sub> Air Quality
-Standard (annual)")}
+\item{airzone}{Character. Column name of the airzone column.}
+
+\item{n_years}{Character. Column name of the number of years (e.g., 'n_years')}
+
+\item{station_name}{Character. Column name of the station name.}
+
+\item{station_id}{Character. Column name of the station id (can be the same
+as station name).}
+
+\item{value1}{Character. Column name of the first metric value (e.g.,
+'metric_value_ambient_annual').}
+
+\item{value2}{Character. Column name of the second metric value (e.g.,
+'metric_value_ambient_24h').}
+
+\item{level}{Character. Column name of the CAAQS level (e.g., 'caaqs_ambient').}
+
+\item{colour}{Character. Column name of the colour for hte CAAQS status box
+(should correspond to each 'level')}
+
+\item{text_colour}{Character. Column name of the text colour for the CAAQS
+status box (should correspond to each 'level')}
 }
 \value{
 Character vector of the HTML code for the popup to be passed to
   leaflet
 }
 \description{
-Create popup for CAAQS indicators
-}
-\details{
-Data frame must contain the following columns: 'p_az' reflecting the
-  airzone name, 'p_station_id' reflecting the station id, 'p_station'
-  reflecting the station name, 'metric_value_ambient' reflecting the CAAQS metric
-  value, 'caaqs_ambient' reflecting the CAAQS status (not in HTML code), and
-  'n_years' reflecting the number of years the CAAQS metric is averaged over.
+For CAAQs where two metrics used to assess management status (e.g., 
+PM 2.5, SO2, NO2)
 }
