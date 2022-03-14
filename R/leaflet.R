@@ -190,6 +190,11 @@ popup_caaqs <- function(data, type = "station",
   # Define Standards - always have the first
   # (internally skip the second as needed, returns NA)
   
+  if(is.null(level2)) {
+    level2 <- "level2"
+    data[[level2]] <- NA
+  }
+
   data <- data %>%
     dplyr::mutate(
       info_box_std1 = popup_caaqs_standard(
@@ -261,10 +266,10 @@ popup_caaqs_metric <- function(metric_name, units, value, n_years,
 popup_caaqs_standard <- function(standard_name, level, level_comp = NULL, 
                                  colour, text_colour, box = 1, nboxes = "nboxes") {
 
-  if(box == 2 && level == level_comp) return(NA_character_)
+  if(box == 2 && (is.na(level) || level == level_comp)) return(NA_character_)
   
   subtext <- dplyr::case_when(
-    is.null(level_comp) || level == level_comp ~ "",
+    is.na(level_comp) || level == level_comp ~ "",
     box == 1 ~ "<span>(Unadjusted for TFEEs)</span>",
     box == 2 ~ "<span>(Adjusted for TFEEs)</span>")
   
