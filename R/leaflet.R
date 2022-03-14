@@ -210,7 +210,7 @@ popup_caaqs <- function(data, type = "station",
       info_box_std3 = dplyr::if_else(
         !is.na(.data[["info_box_std2"]]), 
         paste0("<span style = 'text-align:right; margin-left:450px;'>",
-               "*TFEES = Transboundary Flows and Exceptional Events</span>"),
+               "*TFEEs = Transboundary Flows and Exceptional Events</span>"),
         NA_character_))
   
   # Create Rows and combine
@@ -271,8 +271,8 @@ popup_caaqs_standard <- function(standard_name, level, level_comp = NULL,
   
   subtext <- dplyr::case_when(
     is.na(level_comp) || level == level_comp ~ "",
-    box == 1 ~ "<span>(Unadjusted for TFEEs)</span>",
-    box == 2 ~ "<span>(Adjusted for TFEEs)</span>")
+    box == 1 ~ "<span>(Unadjusted for TFEEs<sup>*</sup>)</span>",
+    box == 2 ~ "<span>(Adjusted for TFEEs<sup>*</sup>)</span>")
   
   if(nchar(level) > 30) add <- " small-std" else add <- ""
   
