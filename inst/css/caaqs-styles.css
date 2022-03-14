@@ -275,24 +275,20 @@ html.lt-ie9 .blur-overlay {
 	font-size: 1em;
 }
 
-
+.popup-row span {
+	font-size: 0.75em;
+	line-height: 0.75;
+}
 
 .popup-row .section-box {
 	padding: 1em 0;
 	background-color: #efefef;
 	min-height: 76px;
-	color: #fff;
 	-webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  margin-left: 5%
-  margin-right: 5%
   display: inline-block;
-}
-
-.popup-row span {
-	font-size: 0.75em;
-	line-height: 0.75;
+  vertical-align: top;
 }
 
 .boxes2 {
@@ -306,12 +302,16 @@ html.lt-ie9 .blur-overlay {
   margin-right: 2%;
 }
 
-.boxes3 .section-standard {
-  width: 32%;
+.boxes3.section-standard {
+  width: 40%;
 }
 
-.boxes3 .section-metric {
-  width: 27%;
+.boxes3.section-metric {
+  width: 23%;
+}
+
+.section-standard.mgmt h3 {
+  font-size: 100%;
 }
 
 .boxes4 {
@@ -319,12 +319,12 @@ html.lt-ie9 .blur-overlay {
   margin-right: 1%;
 }
 
-.boxes4 .section-standard {
+.boxes4.section-standard {
   width: 26%;
 }
 
-.boxes4 .section-metric {
-  width: 20%;
+.boxes4.section-metric {
+  width: 18%;
 }
 
 .popup-row .section-metric {
