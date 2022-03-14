@@ -81,7 +81,11 @@ set_bc_view_on_close <- function(map, zoom = 5) {
 #'
 #' @export
 popup_create_row <- function(...) {
-  paste0("<div class = 'popup-row'>\n  ", ..., "\n</div>\n")
+  list(...) %>%
+    unlist() %>%
+    na.omit() %>%
+    paste0(collapse = "") %>%
+    paste0("<div class = 'popup-row'>\n  ", ., "\n</div>\n")
 }
 
 #' Combine popup rows for leaflet maps
@@ -92,15 +96,11 @@ popup_create_row <- function(...) {
 #' @export
 
 popup_combine_rows <- function(data) {
-
   cols <- names(data)[stringr::str_detect(names(data), "popup_row")]
   if(length(cols) == 1) return(data[, cols])
   
   cols <- as.list(data[, cols])
-  data <- dplyr::mutate(
-    data,
-    popup = purrr::pmap(cols, ~htmltools::HTML(paste0(...))))
-  data$popup
+  purrr::pmap(cols, ~htmltools::HTML(paste0(...)))
 }
 #' Create popup for combination CAAQS indicators
 #' 
@@ -143,14 +143,16 @@ popup_caaqs <- function(data, type = "station",
                         colour1 = "colour", colour2 = "colour2",
                         text_colour1 = "text_colour", 
                         text_colour2 = "text_colour2") {
+  
   if("sf" %in% class(data)) data <- as.data.frame(data)
 
-  if(!is.null(level2) && level1 != level2) standards <- 2 else standards <- 1
-  
   # How many info boxes?
-  nboxes <- 2                                                   # One of each
-  if(length(metrics) > 1) nboxes <- nboxes + 1                  # Two metrics
-  if(standards == 2) nboxes <- nboxes + 1 # Two standards
+  if(length(metrics) == 1) data$nboxes <- 2 else data$nboxes <- 3
+  if(!is.null(level2)) {
+    data <- data %>%
+      dplyr::mutate(nboxes = dplyr::if_else(.data[[level1]] != .data[[level2]],
+                                            nboxes + 1, nboxes))
+  }
   
   if(length(metrics) > 1) {
     metric_names <- paste(to_titlecase(metrics), "Metric")
@@ -163,52 +165,64 @@ popup_caaqs <- function(data, type = "station",
   } else if(type == "airzone") {
     standard_name <- paste(metric_type, "Air Quality Standard") 
   }
+  
+  # Everything calculated rowwise
+  data <- dplyr::rowwise(data)
 
   # Define title
-  data <- popup_caaqs_title(data, type, airzone, station_name)
-  data <- dplyr::mutate(data, popup_row_title = popup_create_row(.data$title))
-  
-  # Define metrics
-  if(length(metrics) > 1) {
-    data <- popup_caaqs_metric(data, metric_names[1], units, 
-                               nboxes = nboxes, value = value1, n_years)
-    data <- popup_caaqs_metric(data, metric_names[2], units, 
-                               nboxes = nboxes, value = value2, n_years)
-  } else {
-    data <- popup_caaqs_metric(data, metric_names[1], units, nboxes, 
-                               value = value1, n_years = n_years)
-  }
-  
-  # Define Standards
-  # (If Achievement depends on tfees, show both)
-  if(standards == 2) {
-    data <- popup_caaqs_standard(data, standard_name, level1,
-                                 colour1, text_colour1, nboxes = nboxes,
-                                 subtext = "Unadjusted for TFEEs")
-    data <- popup_caaqs_standard(data, standard_name, level2,
-                                 colour2, text_colour2, nboxes = nboxes,
-                                 subtext = "Adjusted for TFEEs")
-  } else {
-    data <- popup_caaqs_standard(
-      data, standard_name, level1, colour1, text_colour1, nboxes = nboxes)
-  }
-  
-  # Combine info boxes (tidyverse way to do this?)
-  boxes <- as.data.frame(data) %>%
-    dplyr::select(dplyr::contains("info_box")) %>% 
-    as.list()
-  data$popup_row_info <- do.call("popup_create_row", args = boxes)
+  data <- dplyr::mutate(data, title = popup_caaqs_title(type, 
+                                                        .data[[airzone]],
+                                                        .data[[station_name]]))
+
+  # Define metrics - Always have the first
+  data <- dplyr::mutate(data, info_box_metric1 = popup_caaqs_metric(
+    metric_names[1], units, value = .data[[value1]], n_years = .data[[n_years]],
+    nboxes = .data[["nboxes"]]))
     
+  # Add second if more than one
+  if(length(metrics) > 1) {
+    data <- dplyr::mutate(data, info_box_metric2 = popup_caaqs_metric(
+      metric_names[2], units, value = .data[[value2]], n_years = .data[[n_years]],
+      nboxes = .data[["nboxes"]]))
+  }   
+
+
+  # Define Standards - always have the first
+  # (internally skip the second as needed, returns NA)
+  
+  data <- data %>%
+    dplyr::mutate(
+      info_box_std1 = popup_caaqs_standard(
+        standard_name, level = .data[[level1]], level_comp = .data[[level2]],
+        colour = .data[[colour1]], text_colour = .data[[text_colour1]], 
+        box = 1, nboxes = .data[["nboxes"]]),
+      
+      info_box_std2 = popup_caaqs_standard(
+        standard_name, level = .data[[level2]], level_comp = .data[[level1]], 
+        colour = .data[[colour2]], text_colour = .data[[text_colour2]], 
+        box = 2, nboxes = .data[["nboxes"]]),
+    
+      info_box_std3 = dplyr::if_else(
+        !is.na(.data[["info_box_std2"]]), 
+        paste0("<span style = 'text-align:right; margin-left:450px;'>",
+               "*TFEES = Transboundary Flows and Exceptional Events</span>"),
+        NA_character_))
+  
+  # Create Rows and combine
   data %>%
     dplyr::mutate(
+      popup_row_title = popup_create_row(.data$title),
+      popup_row_info = popup_create_row(.data$info_box_metric1,
+                                        .data$info_box_metric2,
+                                        .data$info_box_std1,
+                                        .data$info_box_std2),
       popup_row_plot1 = popup_create_row(
-        paste0("<img src = '", paste0("./station_plots/", .data[[station_id]], 
-                                      "_", metrics[1], ".svg'"), 
+        paste0("<img src = './station_plots/",                # Image location
+               .data[[station_id]], "_", metrics[1], ".svg'", # Image name
                ">")),
       popup_row_plot2 = popup_create_row(
-        paste0("<img src = '", 
-               paste0("./station_plots/", .data[[station_id]], 
-                      "_", metrics[2], ".svg'"), 
+        paste0("<img src = './station_plots/", 
+               .data[[station_id]], "_", metrics[2], ".svg'", 
                ">"))) %>%
     popup_combine_rows()
 }
@@ -216,63 +230,60 @@ popup_caaqs <- function(data, type = "station",
 
 
 
-popup_caaqs_title <- function(data, type, airzone, station_name) {
+popup_caaqs_title <- function(type, airzone, station_name) {
   if(type == "airzone") {
-    data <- dplyr::mutate(data, title = paste0(
-      "    <h2>Air Zone: ", .data[[airzone]], "</h2>\n",
-      "    <h4>Station: ", .data[[station_name]], "</h4>\n"))
+    title <- paste0("    <h2>Air Zone: ", airzone, "</h2>\n",
+                    "    <h4>Station: ", station_name, "</h4>\n")
   } else if(type == "station") {
-    data <- dplyr::mutate(data, title = paste0(
-      "    <h2>Station: ", .data[[station_name]], "</h2>\n",
-      "    <h4>Air Zone: ", .data[[airzone]], "</h4>\n"))
+    title <- paste0("    <h2>Station: ", station_name, "</h2>\n",
+                    "    <h4>Air Zone: ", airzone, "</h4>\n")
   }
-  dplyr::mutate(data, 
-                title = paste0(
-                  "  <div class = 'title'>\n", .data$title, "  </div>\n"))
-}
-
-popup_caaqs_metric <- function(data, metric_name, units, 
-                               nboxes = 2, value, n_years) {
-
-  class <- paste0("section-box section-metric boxes", nboxes)
-  n <- length(stringr::str_subset(names(data), "info_box")) + 1
   
-  data %>%
-    dplyr::mutate(
-      info_box = dplyr::if_else(is.na(.data[[value]]),
-                                "Insufficient Data", 
-                                paste(.data[[value]], units)),
-      info_box = paste0("    <h4>", metric_name, "</h4>\n",
-                        "    <h3>", .data$info_box, "</h3>\n"),
-      info_box = dplyr::if_else(is.na(.data[[value]]),
-                                .data$info_box,
-                                paste0(.data$info_box, 
-                                       "    <span>(", .data[[n_years]], 
-                                       " year average)</span>\n")),
-      info_box = paste0("  <div class = '", class, "'>\n", 
-                        .data$info_box, "  </div>\n")) %>%
-    dplyr::rename_with(.cols = "info_box", ~ paste0(., n))
+  paste0("<div class = 'title'>\n", title, "  </div>\n")
 }
 
-popup_caaqs_standard <- function(data, standard_name, level, colour, 
-                                 text_colour, nboxes = 2,
-                                 subtext = "") {
+popup_caaqs_metric <- function(metric_name, units, value, n_years, 
+                               nboxes = "nboxes") {
 
-  class <- paste0("section-box section-standard boxes", nboxes)
-  n <- length(stringr::str_subset(names(data), "info_box")) + 1
+  if(is.na(value)) {
+    value <- "<h3>Insufficient Data</h3>"
+  } else {
+    value <- paste("<h3>", value, units, "</h3\n>",
+                   "<span>(", n_years, " year average)</span>\n")
+  }
+  
+  paste0("<div class = 'section-box section-metric boxes", nboxes, "'>\n",
+         "  <h4>", metric_name, "</h4>\n",
+            value, 
+         "</div>\n")
+}
 
-  if(subtext != "") subtext <- paste0("    <span>(", subtext, ")</span>")
-    
-  data %>%
-    dplyr::mutate(
-      info_box = paste0("    <h4>", standard_name, "</h4>\n",
-                          "    <h2>", .data[[level]], "</h2>\n",
-                          subtext),
-      info_box = paste0("  <div class = '", class, "' style = '",
-                          "background-color: ", .data[[colour]], "; ", 
-                          "color: ", .data[[text_colour]], "'>\n",
-                          .data$info_box, "  </div>\n")) %>%
-    dplyr::rename_with(.cols = "info_box", ~ paste0(., n))
+popup_caaqs_standard <- function(standard_name, level, level_comp = NULL, 
+                                 colour, text_colour, box = 1, nboxes = "nboxes") {
+
+  if(box == 2 && level == level_comp) return(NA_character_)
+  
+  subtext <- dplyr::case_when(
+    is.null(level_comp) || level == level_comp ~ "",
+    box == 1 ~ "<span>(Unadjusted for TFEEs)</span>",
+    box == 2 ~ "<span>(Adjusted for TFEEs)</span>")
+  
+  paste0("<div class = '",
+         "section-box section-standard boxes", nboxes,
+         "' style = '",
+         "background-color: ", colour, "; ", 
+         "color: ", text_colour, "'>\n",
+         "    <h4>", standard_name, "</h4>\n",
+         "    <h2>", level, "</h2>\n",
+         subtext,
+         "  </div>\n")
+}
+
+next_box <- function(n) {
+  stringr:::str_subset(n, "info_box") %>%
+    sort() %>%
+    .[length(.)] %>%
+    paste0("info_box", . + 1)
 }
 
 
