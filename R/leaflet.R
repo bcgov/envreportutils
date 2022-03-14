@@ -273,8 +273,10 @@ popup_caaqs_standard <- function(standard_name, level, level_comp = NULL,
     box == 1 ~ "<span>(Unadjusted for TFEEs)</span>",
     box == 2 ~ "<span>(Adjusted for TFEEs)</span>")
   
+  if(nchar(level) > 30) add <- " small-std" else add <- ""
+  
   paste0("<div class = '",
-         "section-box section-standard boxes", nboxes,
+         "section-box section-standard boxes", nboxes, add,
          "' style = '",
          "background-color: ", colour, "; ", 
          "color: ", text_colour, "'>\n",
