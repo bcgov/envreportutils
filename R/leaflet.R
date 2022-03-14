@@ -220,7 +220,8 @@ popup_caaqs <- function(data, type = "station",
       popup_row_info = popup_create_row(.data$info_box_metric1,
                                         .data$info_box_metric2,
                                         .data$info_box_std1,
-                                        .data$info_box_std2),
+                                        .data$info_box_std2,
+                                        .data$info_box_std3),
       popup_row_plot1 = popup_create_row(
         paste0("<img src = './station_plots/",                # Image location
                .data[[station_id]], "_", metrics[1], ".svg'", # Image name
@@ -253,7 +254,7 @@ popup_caaqs_metric <- function(metric_name, units, value, n_years,
   if(is.na(value)) {
     value <- "<h3>Insufficient Data</h3>"
   } else {
-    value <- paste("<h3>", value, units, "</h3\n>",
+    value <- paste0("<h3>", value, units, "</h3\n>",
                    "<span>(", n_years, " year average)</span>\n")
   }
   

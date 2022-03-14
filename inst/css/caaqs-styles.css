@@ -265,6 +265,7 @@ html.lt-ie9 .blur-overlay {
 .no-photo h2 {
 	font-size: 2.125em;
 	line-height: 1.2;
+	font-weight: bold;
 }
 
 .popup-row h3 {
@@ -310,17 +311,17 @@ html.lt-ie9 .blur-overlay {
   width: 23%;
 }
 
-.section-standard.mgmt h3 {
-  font-size: 100%;
+.small-std h2 {
+  font-size: 140%;
 }
 
 .boxes4 {
-  margin-left: 1%;
-  margin-right: 1%;
+  margin-left: 0.5%;
+  margin-right: 0.5%;
 }
 
 .boxes4.section-standard {
-  width: 26%;
+  width: 28%;
 }
 
 .boxes4.section-metric {
