@@ -139,7 +139,7 @@ popup_combine_rows <- function(data) {
 #' @export
 
 popup_caaqs <- function(data, type = "station", 
-                        metric_type, metrics, units, 
+                        metric_type, metrics, metric_names, units, 
                         airzone = "airzone", n_years = "n_years", 
                         station_name, station_id, value1, value2, 
                         level1, level2 = NULL, 
@@ -155,12 +155,6 @@ popup_caaqs <- function(data, type = "station",
     data <- data %>%
       dplyr::mutate(nboxes = dplyr::if_else(.data[[level1]] != .data[[level2]],
                                             nboxes + 1, nboxes))
-  }
-  
-  if(length(metrics) > 1) {
-    metric_names <- paste(to_titlecase(metrics), "Metric")
-  } else {
-    metric_names <- paste(metric_type, " Metric")
   }
     
   if(type == "station") {
