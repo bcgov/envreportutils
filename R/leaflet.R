@@ -100,7 +100,10 @@ popup_combine_rows <- function(data) {
   if(length(cols) == 1) return(data[, cols])
   
   cols <- as.list(data[, cols])
-  purrr::pmap(cols, ~htmltools::HTML(paste0(...)))
+  purrr::pmap(cols, ~{
+    l <- list(...)[!is.na(list(...))]
+    htmltools::HTML(paste0(l, collapse = ""))
+  })
 }
 #' Create popup for combination CAAQS indicators
 #' 
@@ -224,18 +227,23 @@ popup_caaqs <- function(data, type = "station",
                                         .data$info_box_std1,
                                         .data$info_box_std2,
                                         .data$info_box_std3),
-      popup_row_plot1 = popup_create_row(
-        paste0("<img src = './station_plots/",                # Image location
-               .data[[station_id]], "_", metrics[1], ".svg'", # Image name
-               ">")),
-      popup_row_plot2 = popup_create_row(
-        paste0("<img src = './station_plots/", 
-               .data[[station_id]], "_", metrics[2], ".svg'", 
-               ">"))) %>%
+      popup_row_plot1 = popup_image(paste0("./station_plots/", 
+                                           .data[[station_id]], "_", 
+                                           metrics[1], ".svg")),
+      popup_row_plot2 = popup_image(paste0("./station_plots/", 
+                                           .data[[station_id]], "_", 
+                                           metrics[2], ".svg"))) %>%
     popup_combine_rows()
 }
 
 
+
+popup_image <- function(file) {
+  if(file.exists(file)) {
+    paste0("<img src = '", file, "'>") %>%
+      popup_create_row()
+  } else NA_character_
+}
 
 
 popup_caaqs_title <- function(type, airzone, station_name) {
