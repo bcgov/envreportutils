@@ -184,7 +184,9 @@ popup_caaqs <- function(data, type = "station",
     data <- dplyr::mutate(data, info_box_metric2 = popup_caaqs_metric(
       metric_names[2], units, value = .data[[value2]], n_years = .data[[n_years]],
       nboxes = .data[["nboxes"]]))
-  }   
+  } else {
+    data <- dplyr::mutate(data, info_box_metric2 = NA_character_)
+  }
 
 
   # Define Standards - always have the first
