@@ -234,7 +234,7 @@ popup_caaqs <- function(data, type = "station",
         length(metrics) > 1, 
         popup_create_row(paste0("<img src = './station_plots/",
                                 .data[[station_id]], "_", 
-                                metrics[1], ".svg'>")),
+                                metrics[2], ".svg'>")),
         NA_character_
       )) %>%
   popup_combine_rows()
