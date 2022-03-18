@@ -242,7 +242,7 @@ html.lt-ie9 .blur-overlay {
 	width: 95% !important;
 	margin: 1.25em auto 0;
 	overflow: auto;
-	max-height: 450px;
+	max-height: 500px;
 }
 
 .popup-row {
@@ -295,7 +295,7 @@ html.lt-ie9 .blur-overlay {
 .boxes2 {
   margin-left: 3%;
   margin-right: 3%;
-  width: 32%;
+  width: 40%;
 }
 
 .boxes3 {
