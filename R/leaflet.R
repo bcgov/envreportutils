@@ -163,6 +163,8 @@ popup_caaqs <- function(data, type = "station",
     standard_name <- paste(metric_type, "Air Quality Standard") 
   }
   
+  if(missing(metric_names) && length(metrics) == 1) metric_names <- metric_type
+  
   # Everything calculated rowwise
   data <- dplyr::rowwise(data)
 
