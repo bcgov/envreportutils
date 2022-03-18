@@ -227,22 +227,17 @@ popup_caaqs <- function(data, type = "station",
                                         .data$info_box_std1,
                                         .data$info_box_std2,
                                         .data$info_box_std3),
-      popup_row_plot1 = popup_image(paste0("./station_plots/", 
-                                           .data[[station_id]], "_", 
-                                           metrics[1], ".svg")),
-      popup_row_plot2 = popup_image(paste0("./station_plots/", 
-                                           .data[[station_id]], "_", 
-                                           metrics[2], ".svg"))) %>%
-    popup_combine_rows()
-}
-
-
-
-popup_image <- function(file) {
-  if(file.exists(file)) {
-    paste0("<img src = '", file, "'>") %>%
-      popup_create_row()
-  } else NA_character_
+      popup_row_plot1 = popup_create_row(paste0("<img src = './station_plots/",
+                                                .data[[station_id]], "_", 
+                                                metrics[1], ".svg'>")),
+      popup_row_plot2 = dplyr::if_else(
+        length(metrics) > 1, 
+        popup_create_row(paste0("<img src = './station_plots/",
+                                .data[[station_id]], "_", 
+                                metrics[1], ".svg'>")),
+        NA_character_
+      )) %>%
+  popup_combine_rows()
 }
 
 
