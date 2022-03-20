@@ -235,7 +235,7 @@ popup_plot <- function(plot_loc, stn_id, metrics) {
     plot_loc, 
     pattern = paste0(stn_id, "_(", paste0(metrics, collapse = "|"), ").svg")) %>%
     paste0("<img src = '", file.path(plot_loc, .), "'>") %>%
-    .[order(!stringr::str_detect(metrics[1]))] # Arrange in order of metrics
+    .[order(!stringr::str_detect(., metrics[1]))] # Arrange in order of metrics
   
   data.frame(popup_row_plot1 = popup_create_row(files[1]), 
              popup_row_plot2 = popup_create_row(files[2]))
