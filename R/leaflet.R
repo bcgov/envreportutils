@@ -258,7 +258,7 @@ popup_caaqs_metric <- function(metric_name, units, value, n_years,
   if(is.na(value)) {
     value <- "<h3>Insufficient Data</h3>"
   } else {
-    value <- paste0("<h3>", value, units, "</h3\n>",
+    value <- paste0("<h3>", value, " ", units, "</h3\n>",
                    "<span>(", n_years, " year average)</span>\n")
   }
   
