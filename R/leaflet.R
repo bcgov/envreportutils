@@ -140,7 +140,7 @@ popup_combine_rows <- function(data) {
 
 popup_caaqs <- function(data, type = "station", 
                         metric_type, metrics, metric_names, 
-                        units, plot_loc, 
+                        units, plot_loc = "./station_plots/", 
                         airzone = "airzone", n_years = "n_years", 
                         station_name, station_id, value1, value2, 
                         level1, level2 = NULL, 
