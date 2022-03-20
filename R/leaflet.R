@@ -139,7 +139,8 @@ popup_combine_rows <- function(data) {
 #' @export
 
 popup_caaqs <- function(data, type = "station", 
-                        metric_type, metrics, metric_names, units, 
+                        metric_type, metrics, metric_names, 
+                        units, plot_loc, 
                         airzone = "airzone", n_years = "n_years", 
                         station_name, station_id, value1, value2, 
                         level1, level2 = NULL, 
@@ -223,17 +224,19 @@ popup_caaqs <- function(data, type = "station",
                                         .data$info_box_std1,
                                         .data$info_box_std2,
                                         .data$info_box_std3),
-      popup_row_plot1 = popup_create_row(paste0("<img src = './station_plots/",
-                                                .data[[station_id]], "_", 
-                                                metrics[1], ".svg'>")),
-      popup_row_plot2 = dplyr::if_else(
-        length(metrics) > 1, 
-        popup_create_row(paste0("<img src = './station_plots/",
-                                .data[[station_id]], "_", 
-                                metrics[2], ".svg'>")),
-        NA_character_
-      )) %>%
-  popup_combine_rows()
+      popup_plots = popup_plot(plot_loc, .data[[station_id]], metrics)) %>%
+    tidyr::unnest(popup_plots) %>%
+    popup_combine_rows()
+}
+
+popup_plot <- function(plot_loc, stn_id, metrics) {
+  files <- list.files(
+    plot_loc, 
+    pattern = paste0(stn_id, "_(", paste0(metrics, collapse = "|"), ").svg")) %>%
+    paste0("<img src = '", ., "'>")
+  
+  data.frame(popup_row_plot1 = popup_create_row(files[1]), 
+             popup_row_plot2 = popup_create_row(files[2]))
 }
 
 
