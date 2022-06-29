@@ -1,7 +1,8 @@
-# envreportutils 0.9.0.9999
+# envreportutils 0.9.1
 * `soe_path()` can now accept individual path components, 
   which are combined with `file.path()`
 * Fixed error in round_percent where range was used incorrectly.
+* Leaflet popup functions re-written for new leaflet map layouts
   
 # envreportutils 0.9.0
 * Added new functions `save_png_retina()` and `save_svg_px()`, wrapper functions around `png_retina()` & `svg_px()` analagous to `ggplot2::gsave()`
