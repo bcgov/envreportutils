@@ -47,14 +47,14 @@ You should rarely have to change this.}
 \item{standalone}{Produce a standalone svg file? If \code{FALSE}, omits
 xml header and default namespace.}
 
-\item{system_fonts}{\ifelse{{html}{\out{<a href='https://www.tidyverse.org/lifecycle/#superseded'><img src='figures/lifecycle-superseded.svg' alt='Superseded lifecycle'></a>}}{\strong{Superseded}}} \emph{Consider using
+\item{system_fonts}{\ifelse{html}{\out{<a href='https://www.tidyverse.org/lifecycle/#superseded'><img src='figures/lifecycle-superseded.svg' alt='Superseded lifecycle'></a>}}{\strong{Superseded}} \emph{Consider using
 \code{\link[systemfonts:register_font]{systemfonts::register_font()}} instead}. Named list of font
 names to be aliased with fonts installed on your system. If unspecified,
 the R default families \code{sans}, \code{serif}, \code{mono} and
 \code{symbol} are aliased to the family returned by
 \code{\link[systemfonts]{font_info}()}.}
 
-\item{user_fonts}{\ifelse{{html}{\out{<a href='https://www.tidyverse.org/lifecycle/#superseded'><img src='figures/lifecycle-superseded.svg' alt='Superseded lifecycle'></a>}}{\strong{Superseded}}} \emph{Consider using
+\item{user_fonts}{\ifelse{html}{\out{<a href='https://www.tidyverse.org/lifecycle/#superseded'><img src='figures/lifecycle-superseded.svg' alt='Superseded lifecycle'></a>}}{\strong{Superseded}} \emph{Consider using
 \code{\link[systemfonts:register_font]{systemfonts::register_font()}} instead}. Named list of fonts to
 be aliased with font files provided by the user rather than fonts properly
 installed on the system. The aliases can be fonts from the fontquiver
@@ -79,9 +79,9 @@ converts the width and height to inches at the resolution specified.
 }
 \section{Functions}{
 \itemize{
-\item \code{save_svg_px}: 
-}}
+\item \code{save_svg_px()}: 
 
+}}
 \examples{
 
 # You want to display at 500 * 500 in the web:

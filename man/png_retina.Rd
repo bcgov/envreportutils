@@ -33,14 +33,13 @@ save_png_retina(
 )
 }
 \arguments{
-\item{filename}{the output file path.
-    The page number is substituted if a C integer format is included in
-    the character string, as in the default.  (The result must be less
-    than \code{PATH_MAX} characters long, and may be truncated if not.
-    See \code{\link[grDevices]{postscript}} for further details.)  Tilde expansion
-    is performed where supported by the platform.  An input with
-    a marked encoding is converted to the native encoding on an error is
-    given.}
+\item{filename}{the path of the output file, up to 511 characters.  The
+    page number is substituted if a C integer format is included in the
+    character string, as in the default, and tilde-expansion is
+    performed (see \code{\link{path.expand}}).   (The result must be less than
+    600 characters long.  See \code{\link[grDevices]{postscript}} for further
+    details.)
+  }
 
 \item{width}{the width of the device.}
 
@@ -57,34 +56,21 @@ save_png_retina(
     par("bg").}
 
 \item{res}{The nominal resolution in ppi which will be recorded in the
-    bitmap file, if a positive integer.  Also used for \code{units}
-    other than the default, and to convert points to pixels.}
+    bitmap file, if a positive integer.  Also used for units other than
+    the default.  If not specified, taken as 72 ppi to set the size of
+    text and line widths.}
 
-\item{...}{for \code{type = "Xlib"} only, additional arguments to
-    the underlying \code{\link[grDevices]{X11}} device such as \code{fonts} or
-     \code{family}.
+\item{type}{Should be plotting be done using Windows GDI or cairographics?}
 
-    For types \code{"cairo"} and \code{"quartz"}, the \code{family}
-    argument can be supplied.  See the \sQuote{Cairo fonts}
-    section in the help for \code{\link[grDevices]{X11}}.
-    
-    For type \code{"cairo"}, the \code{symbolfamily}
-    argument can be supplied.  See \code{\link[grDevices]{X11.options}}.
-  }
+\item{antialias}{Length-one character vector.
 
-\item{type}{character string, one of \code{"Xlib"} or \code{"quartz"}
-    (some macOS builds) or \code{"cairo"}.  The latter will only be
-    available if the system was compiled with support for cairo --
-    otherwise \code{"Xlib"} will be used.  The default is set by
-    \code{\link{getOption}("bitmapType")} -- the \sQuote{out of the box}
-    default is \code{"quartz"} or \code{"cairo"} where available,
-    otherwise \code{"Xlib"}.}
+    For allowed values and their effect on fonts with \code{type =
+      "windows"} see \code{\link[grDevices]{windows}}: for that type if the
+    argument is missing the default is taken from
+    \code{windows.options()$bitmap.aa.win}.
 
-\item{antialias}{for \code{type = "cairo"}, giving the type of
-    anti-aliasing (if any) to be used for fonts and lines (but not
-    fills). See \code{\link[grDevices]{X11}}.  The default is set by
-    \code{\link[grDevices]{X11.options}}.  Also for \code{type = "quartz"}, where
-    antialiasing is used unless \code{antialias = "none"}.}
+    For allowed values and their effect (on fonts and lines, but not
+    fills) with \code{type = "cairo"} see \code{\link[grDevices]{svg}}.}
 
 \item{x}{a ggplot2 object}
 }
@@ -103,9 +89,9 @@ attributes in the html at the original resolution.
 }
 \section{Functions}{
 \itemize{
-\item \code{save_png_retina}: 
-}}
+\item \code{save_png_retina()}: 
 
+}}
 \examples{
 
 # You want to display at 500 * 500 in the web:
