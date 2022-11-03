@@ -25,6 +25,30 @@ theme_soe <- function(base_size=12, base_family="Verdana") {
   thm
 }  
 
+#' BC sans theme for EnvReportBC graphs and plots
+#' 
+#' Function applies BC sans font to standard SOE theme. 
+#' 
+#' @import ggplot2 showtext
+#' 
+#' @param  base_size base font size (default = 12)
+#' @param  base_family base font family (default = BC Sans)
+#' @export
+#' @keywords plotting theme
+#' @return returns a plot theme
+
+theme_bc_sans <- function(base_size=12, base_family="BCSans") {
+  font_add(family = "BCSans", regular = "/inst/fonts/BCSans-Regular.ttf", 
+           italic = "/inst/fonts/BCSans-Italic.ttf",
+           bold = "/inst/fonts/BCSans-Bold.ttf",
+           bolditalic = "/inst/fonts/BCSans-BoldItalic.ttf"
+           )
+  
+  thm <- theme_soe_foundation(base_size = base_size, base_family = base_family)
+  thm
+}  
+
+
 #' Default theme for EnvReportBC facetted graphs and plots
 #' 
 #' @import ggplot2
