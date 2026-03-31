@@ -51,5 +51,7 @@ package available on GitHub here: https://github.com/bcgov/bcgovr
    \item \code{\link{add_license_header}}: This function is defunct.
    \item \code{\link{add_readme}}: This function is defunct.
    \item \code{\link{add_rproj}}: This function is defunct.
+   \item \code{\link{order_df}}: This function is defunct.
+   \item \code{\link{multiplot}}: This function is defunct.
 }
 }
